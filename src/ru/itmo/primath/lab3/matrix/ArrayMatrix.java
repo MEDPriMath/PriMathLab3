@@ -2,18 +2,32 @@ package ru.itmo.primath.lab3.matrix;
 
 import java.util.function.ObjDoubleConsumer;
 
-public class ArrayMatrix<T> extends Matrix<T> {
+public class ArrayMatrix<T extends Number> extends Matrix<T> {
 
-    private T[][] matrix;
+    private Object[][] matrix;
 
     public ArrayMatrix(T[][] array) {
         super(array.length, array[0].length);
         this.matrix = array;
     }
 
+    public ArrayMatrix(Matrix<T> otherMatrix){
+        this(otherMatrix.getMatrixDimensionM(), otherMatrix.getMatrixDimensionN());
+        for (int i = 0; i < matrixDimensionM; ++i){
+            for (int j = 0; j < matrixDimensionN; ++j){
+                this.matrix[i][j] = otherMatrix.get(i, j);
+            }
+        }
+
+    }
+
     public ArrayMatrix(int matrixDimension){
-        super(matrixDimension);
-        this.matrix = (T[][]) new Object[matrixDimension][matrixDimension];
+        this(matrixDimension, matrixDimension);
+    }
+
+    public ArrayMatrix(int matrixDimensionM, int matrixDimensionN){
+        super(matrixDimensionM, matrixDimensionN);
+        this.matrix = new Object[matrixDimensionM][matrixDimensionN];
     }
 
     @Override
@@ -23,7 +37,7 @@ public class ArrayMatrix<T> extends Matrix<T> {
         if (col < 0 || col >= matrixDimensionN)
             throw new ArrayIndexOutOfBoundsException();
 
-        return matrix[row][col];
+        return (T) matrix[row][col];
     }
 
     public void set(T elem, int row, int col){

@@ -1,6 +1,6 @@
 package ru.itmo.primath.lab3.matrix;
 
-public abstract class Matrix<T> {
+public abstract class Matrix<T extends Number> {
 
     protected int matrixDimensionM;
     protected int matrixDimensionN;
@@ -24,5 +24,22 @@ public abstract class Matrix<T> {
 
     public int getMatrixDimensionN() {
         return matrixDimensionN;
+    }
+
+    public Matrix<T> multiply(Matrix<T> otherMatrix){
+        if (this.matrixDimensionN != otherMatrix.matrixDimensionM)
+            throw new IllegalArgumentException();
+        ArrayMatrix<T> resultMatrix = new ArrayMatrix<T>(this.matrixDimensionM, otherMatrix.matrixDimensionN);
+        for (int i = 0; i < matrixDimensionM; ++i){
+            for (int j = 0; j < matrixDimensionN; ++j){
+                Double elem = 0d;
+                for (int k = 0; k < matrixDimensionN; ++k){
+                    elem += this.get(i, k).doubleValue() * otherMatrix.get(k, j).doubleValue();
+                }
+                resultMatrix.set((T)elem, i, j);
+            }
+        }
+
+        return resultMatrix;
     }
 }

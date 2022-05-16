@@ -3,7 +3,7 @@ package ru.itmo.primath.lab3.matrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSRMatrix<T> extends Matrix<T> {
+public class CSRMatrix<T extends Number> extends Matrix<T> {
 
     private T zero;
     private List<T> data;

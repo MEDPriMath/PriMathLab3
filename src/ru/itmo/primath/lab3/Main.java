@@ -21,7 +21,7 @@ public class Main {
 
         ArrayMatrix<Integer> arrayMatrix = new ArrayMatrix<>(new Integer[][]{
                 {1, 6, 1},
-                {0, 1, 0},
+                {8, 1, 0},
                 {3, 2, 4}
         });
         CSRMatrix<Integer> csrMatrix = new CSRMatrix<>(arrayMatrix, 0);
@@ -53,5 +53,13 @@ public class Main {
             System.out.println();
         }
 
+        System.out.println();
+        Matrix<Double> checkMatrix = l.multiply(u);
+        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
+            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
+                System.out.print(checkMatrix.get(i, j) + " ");
+            }
+            System.out.println();
+        }
     }
 }

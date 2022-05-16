@@ -31,21 +31,23 @@ public class LUDecomposition<T extends Number> {
                 uMatrix.set(zero.doubleValue(), i, j);
                 lMatrix.set(zero.doubleValue(), i, j);
             }
+        }
+        for (int i = 0; i < n; ++i){
             lMatrix.set(identityElement.doubleValue(), i, i);
         }
 
         for (int i = 0; i < n; ++i){
             for (int j = 0; j < n; ++j){
                 if (i <= j){
-                    Double temp = zero.doubleValue();
-                    for (int k = 0; k < i - 1; ++k){
+                    double temp = zero.doubleValue();
+                    for (int k = 0; k < i; ++k){
                         temp += lMatrix.get(i, k) * uMatrix.get(k, j);
                     }
                     uMatrix.set(matrix.get(i, j).doubleValue() - temp, i, j);
                 }
                 if (i > j){
-                    Double temp = zero.doubleValue();
-                    for (int k = 0; k < i - 1; ++k){
+                    double temp = zero.doubleValue();
+                    for (int k = 0; k < j; ++k){
                         temp += lMatrix.get(i, k) * uMatrix.get(k, j);
                     }
                     lMatrix.set((matrix.get(i, j).doubleValue() - temp) / uMatrix.get(j, j), i, j);
