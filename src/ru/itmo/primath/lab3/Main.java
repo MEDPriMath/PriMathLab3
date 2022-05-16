@@ -1,11 +1,7 @@
 package ru.itmo.primath.lab3;
 
-import ru.itmo.primath.lab3.matrix.ArrayMatrix2;
-import ru.itmo.primath.lab3.matrix.CSRMatrix2;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import ru.itmo.primath.lab3.matrix.ArrayMatrix;
+import ru.itmo.primath.lab3.matrix.CSRMatrix;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,8 +17,8 @@ public class Main {
             System.out.println();
         }*/
 
-        ArrayMatrix2<Integer> arrayMatrix2 = new ArrayMatrix2<>(new Integer[][]{{1, 0, 1}, {0, 1, 0}, {3, 2, 0}});
-        CSRMatrix2<Integer> csrMatrix2 = new CSRMatrix2<>(arrayMatrix2, 0);
+        ArrayMatrix<Integer> arrayMatrix2 = new ArrayMatrix<>(new Integer[][]{{1, 0, 1}, {0, 1, 0}, {3, 2, 0}});
+        CSRMatrix<Integer> csrMatrix2 = new CSRMatrix<>(arrayMatrix2, 0);
         for (int i = 0; i < csrMatrix2.getMatrixDimensionM(); ++i){
             for (int j = 0; j < csrMatrix2.getMatrixDimensionN(); ++j){
                 System.out.print(csrMatrix2.get(i, j) + " ");

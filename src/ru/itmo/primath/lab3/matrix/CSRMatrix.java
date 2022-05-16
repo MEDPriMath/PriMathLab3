@@ -3,14 +3,14 @@ package ru.itmo.primath.lab3.matrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSRMatrix2<T> extends Matrix2<T> {
+public class CSRMatrix<T> extends Matrix<T> {
 
     private T zero;
     private List<T> data;
     private List<Integer> indices;
     private List<Integer> indPtr;
 
-    public CSRMatrix2(int dimensionM, int dimensionN, T zero, List<T> data, List<Integer> indices, List<Integer> indPtr) {
+    public CSRMatrix(int dimensionM, int dimensionN, T zero, List<T> data, List<Integer> indices, List<Integer> indPtr) {
         super(dimensionM, dimensionN);
         this.zero = zero;
         this.data = new ArrayList<>(data);
@@ -18,7 +18,7 @@ public class CSRMatrix2<T> extends Matrix2<T> {
         this.indPtr = new ArrayList<>(indPtr);
     }
 
-    public CSRMatrix2(int dimension, T zero, List<T> data, List<Integer> indices, List<Integer> indPtr) {
+    public CSRMatrix(int dimension, T zero, List<T> data, List<Integer> indices, List<Integer> indPtr) {
         this(dimension, dimension, zero, data, indices, indPtr);
         this.zero = zero;
         this.data = new ArrayList<>(data);
@@ -26,17 +26,17 @@ public class CSRMatrix2<T> extends Matrix2<T> {
         this.indPtr = new ArrayList<>(indPtr);
     }
 
-    public CSRMatrix2(Matrix2<T> matrix2, T zero) {
-        super(matrix2.getMatrixDimensionM(), matrix2.getMatrixDimensionN());
+    public CSRMatrix(Matrix<T> matrix, T zero) {
+        super(matrix.getMatrixDimensionM(), matrix.getMatrixDimensionN());
         this.zero = zero;
         List<T> data = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
         List<Integer> indPtr = new ArrayList<>();
         indPtr.add(1);
-        for (int i = 0; i < matrix2.getMatrixDimensionM(); ++i) {
+        for (int i = 0; i < matrix.getMatrixDimensionM(); ++i) {
             int notNull = 0;
-            for (int j = 0; j < matrix2.getMatrixDimensionN(); ++j) {
-                T element = matrix2.get(i, j);
+            for (int j = 0; j < matrix.getMatrixDimensionN(); ++j) {
+                T element = matrix.get(i, j);
                 if (!element.equals(zero)) {
                     data.add(element);
                     indices.add(j);

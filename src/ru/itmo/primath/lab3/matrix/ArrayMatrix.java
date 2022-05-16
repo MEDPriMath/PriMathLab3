@@ -1,10 +1,10 @@
 package ru.itmo.primath.lab3.matrix;
 
-public class ArrayMatrix2<T> extends Matrix2<T> {
+public class ArrayMatrix<T> extends Matrix<T> {
 
     private final T[][] matrix;
 
-    public ArrayMatrix2(T[][] array) {
+    public ArrayMatrix(T[][] array) {
         super(array.length, array[0].length);
         this.matrix = array;
     }
