@@ -66,6 +66,36 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
         return zero;
     }
 
+    @Override
+    public void set(T elem, int row, int col) {
+        if (row < 0 || row >= matrixDimensionM)
+            throw new ArrayIndexOutOfBoundsException();
+        if (col < 0 || col >= matrixDimensionN)
+            throw new ArrayIndexOutOfBoundsException();
+
+        ArrayMatrix<T> matrix = new ArrayMatrix<>(this);
+        matrix.set(elem, row, col);
+        List<T> data = new ArrayList<>();
+        List<Integer> indices = new ArrayList<>();
+        List<Integer> indPtr = new ArrayList<>();
+        indPtr.add(1);
+        for (int i = 0; i < matrix.getMatrixDimensionM(); ++i) {
+            int notNull = 0;
+            for (int j = 0; j < matrix.getMatrixDimensionN(); ++j) {
+                T element = matrix.get(i, j);
+                if (!element.equals(zero)) {
+                    data.add(element);
+                    indices.add(j);
+                    ++notNull;
+                }
+            }
+            indPtr.add(indPtr.get(indPtr.size() - 1) + notNull);
+        }
+        this.data = data;
+        this.indices = indices;
+        this.indPtr = indPtr;
+    }
+
     private int countElementsInRow(int row) {
         if (row < 0 || row >= matrixDimensionM)
             throw new ArrayIndexOutOfBoundsException();

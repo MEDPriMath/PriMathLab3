@@ -17,6 +17,7 @@ public abstract class Matrix<T extends Number> {
     }
 
     public abstract T get(int row, int col);
+    public abstract void set(T elem, int row, int col);
 
     public int getMatrixDimensionM() {
         return matrixDimensionM;
