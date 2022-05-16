@@ -51,18 +51,16 @@ public class CSRMatrix<T> extends Matrix<T> {
     }
 
     @Override
-    public T get(int... indices) {
-        if (indices.length != 2)
-            throw new IllegalArgumentException();
-        if (indices[0] < 0 || indices[0] >= matrixDimensionM)
+    public T get(int row, int col) {
+        if (row < 0 || row >= matrixDimensionM)
             throw new ArrayIndexOutOfBoundsException();
-        if (indices[1] < 0 || indices[1] >= matrixDimensionN)
+        if (col < 0 || col >= matrixDimensionN)
             throw new ArrayIndexOutOfBoundsException();
 
-        int elementsBefore = this.indPtr.get(indices[0]) - this.indPtr.get(0);
-        int elementsInRow = countElementsInRow(indices[0]);
+        int elementsBefore = this.indPtr.get(row) - this.indPtr.get(0);
+        int elementsInRow = countElementsInRow(row);
         for (int i = elementsBefore; i < elementsBefore + elementsInRow; ++i) {
-            if (this.indices.get(i) == indices[1])
+            if (this.indices.get(i) == col)
                 return this.data.get(i);
         }
         return zero;

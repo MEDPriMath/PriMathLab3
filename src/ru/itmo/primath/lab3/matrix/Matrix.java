@@ -16,7 +16,7 @@ public abstract class Matrix<T> {
         this(matrixDimension, matrixDimension);
     }
 
-    public abstract T get(int... indices);
+    public abstract T get(int row, int col);
 
     public int getMatrixDimensionM() {
         return matrixDimensionM;

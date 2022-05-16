@@ -1,23 +1,37 @@
 package ru.itmo.primath.lab3.matrix;
 
+import java.util.function.ObjDoubleConsumer;
+
 public class ArrayMatrix<T> extends Matrix<T> {
 
-    private final T[][] matrix;
+    private T[][] matrix;
 
     public ArrayMatrix(T[][] array) {
         super(array.length, array[0].length);
         this.matrix = array;
     }
 
+    public ArrayMatrix(int matrixDimension){
+        super(matrixDimension);
+        this.matrix = (T[][]) new Object[matrixDimension][matrixDimension];
+    }
+
     @Override
-    public T get(int... indices) {
-        if (indices.length != 2)
-            throw new IllegalArgumentException();
-        if (indices[0] < 0 || indices[0] >= matrixDimensionM)
+    public T get(int row, int col) {
+        if (row < 0 || row >= matrixDimensionM)
             throw new ArrayIndexOutOfBoundsException();
-        if (indices[1] < 0 || indices[1] >= matrixDimensionN)
+        if (col < 0 || col >= matrixDimensionN)
             throw new ArrayIndexOutOfBoundsException();
 
-        return matrix[indices[0]][indices[1]];
+        return matrix[row][col];
+    }
+
+    public void set(T elem, int row, int col){
+        if (row < 0 || row >= matrixDimensionM)
+            throw new ArrayIndexOutOfBoundsException();
+        if (col < 0 || col >= matrixDimensionN)
+            throw new ArrayIndexOutOfBoundsException();
+
+        matrix[row][col] = elem;
     }
 }
