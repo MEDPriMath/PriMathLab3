@@ -1,5 +1,6 @@
 package ru.itmo.primath.lab3;
 
+import ru.itmo.primath.lab3.invertible.InvertMatrix;
 import ru.itmo.primath.lab3.lu.LUDecomposition;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.CSRMatrix;
@@ -37,15 +38,15 @@ public class Main {
         Matrix<Double> l = luDecomposition.getlMatrix();
         Matrix<Double> u = luDecomposition.getuMatrix();
 
-        System.out.println();
+        System.out.println("l");
         for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
             for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
                 System.out.print(l.get(i, j) + " ");
             }
             System.out.println();
         }
-        System.out.println();
 
+        System.out.println("u");
         for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
             for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
                 System.out.print(u.get(i, j) + " ");
@@ -53,11 +54,33 @@ public class Main {
             System.out.println();
         }
 
-        System.out.println();
+        System.out.println("Check1: ");
         Matrix<Double> checkMatrix = l.multiply(u);
         for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
             for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
                 System.out.print(checkMatrix.get(i, j) + " ");
+            }
+            System.out.println();
+        }
+
+        InvertMatrix<Integer> invert = new InvertMatrix<>(csrMatrix, 0, 1);
+        invert.invert();
+        Matrix<Double> invertMatrix = invert.getInvertibleMatrix();
+
+        System.out.println("invert: ");
+        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
+            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
+                System.out.print(invertMatrix.get(i, j) + " ");
+            }
+            System.out.println();
+        }
+
+        Matrix<Double> checkMatrix1 = csrMatrix.multiply(invertMatrix);
+
+        System.out.println("Check2: ");
+        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
+            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
+                System.out.print(checkMatrix1.get(i, j) + " ");
             }
             System.out.println();
         }
