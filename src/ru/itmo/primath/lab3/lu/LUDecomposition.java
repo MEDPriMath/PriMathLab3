@@ -14,7 +14,7 @@ public class LUDecomposition<T extends Number> {
 
 
     public LUDecomposition(Matrix<T> matrix, T zero, T identityElement){
-        if (matrix.getMatrixDimensionM() != matrix.getMatrixDimensionN())
+        if (!matrix.isSquare())
             throw new IllegalArgumentException();
 
         this.matrix = matrix;

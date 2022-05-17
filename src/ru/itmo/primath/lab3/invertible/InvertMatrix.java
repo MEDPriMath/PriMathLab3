@@ -11,6 +11,8 @@ public class InvertMatrix<T extends Number> {
     private ArrayMatrix<Double> invertibleMatrix;
 
     public InvertMatrix(Matrix<T> matrix, T zero, T identityElement){
+        if (!matrix.isSquare())
+            throw new IllegalArgumentException();
         this.matrix = matrix;
         this.zero = zero;
         this.identityElement = identityElement;

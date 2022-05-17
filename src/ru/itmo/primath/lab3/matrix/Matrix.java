@@ -43,4 +43,8 @@ public abstract class Matrix<T extends Number> {
 
         return resultMatrix;
     }
+
+    public boolean isSquare(){
+        return matrixDimensionM == matrixDimensionN;
+    }
 }

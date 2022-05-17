@@ -5,6 +5,11 @@ import ru.itmo.primath.lab3.lu.LUDecomposition;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
+import ru.itmo.primath.lab3.solvers.LinearEquationsSolver;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,9 +26,8 @@ public class Main {
         }*/
 
         ArrayMatrix<Integer> arrayMatrix = new ArrayMatrix<>(new Integer[][]{
-                {1, 6, 1},
-                {8, 1, 0},
-                {3, 2, 4}
+                {1, 1},
+                {8, 1},
         });
         CSRMatrix<Integer> csrMatrix = new CSRMatrix<>(arrayMatrix, 0);
         for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
@@ -84,5 +88,10 @@ public class Main {
             }
             System.out.println();
         }
+
+        LinearEquationsSolver<Integer> equationsSolver = new LinearEquationsSolver<>(csrMatrix, Arrays.asList(1,2), 0, 1);
+
+        List<Double> ans = equationsSolver.solve();
+        System.out.println(ans);
     }
 }
