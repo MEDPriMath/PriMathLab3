@@ -67,9 +67,9 @@ public class Main {
         List<Double> ans = equationsSolver.solve();
         System.out.println(ans);
 
-        MatrixGenerator matrixGenerator = new DiagonallyDominantMatrixGenerator();
+        MatrixGenerator matrixGenerator = new DiagonallyDominantMatrixGenerator(1);
         Matrix<Integer> m = matrixGenerator.generate(8);
         System.out.println("generated");
-        m.print();
+        m.print(3);
     }
 }

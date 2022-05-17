@@ -6,25 +6,28 @@ import ru.itmo.primath.lab3.matrix.Matrix;
 import java.util.Random;
 
 public class DiagonallyDominantMatrixGenerator implements MatrixGenerator{
+    private int k;
+
+    public DiagonallyDominantMatrixGenerator(int k) {
+        this.k = k;
+    }
+
     @Override
     public <T extends Number> Matrix<T> generate(int n) {
         if (n < 0)
             throw new IllegalArgumentException();
         Matrix<T> matrix = new ArrayMatrix<T>(n);
         Random r = new Random();
+        double sum = 0;
         for (int i = 0; i < n; ++i){
             for (int j = 0; j < n; ++j){
-                matrix.set((T) Double.valueOf(r.nextInt(-4, 1)), i, j);
+                T elem = (T) Double.valueOf(r.nextInt(-4, 1));
+                sum += elem.doubleValue();
+                matrix.set(elem, i, j);
             }
         }
         for (int i = 0; i < n; ++i){
-            double sum = 0;
-            for (int k = 0; k < n; ++k){
-                if (k == i)
-                    continue;
-                sum += matrix.get(i, k).doubleValue();
-            }
-            matrix.set((T) Double.valueOf(sum), i, i);
+            matrix.set((T) Double.valueOf(-sum + Math.pow(10, -k)), i, i);
         }
 
         return matrix;
