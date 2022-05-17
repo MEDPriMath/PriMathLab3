@@ -47,4 +47,24 @@ public abstract class Matrix<T extends Number> {
     public boolean isSquare(){
         return matrixDimensionM == matrixDimensionN;
     }
+
+    public void print() {
+        print(1);
+    }
+
+    public void print(int precision){
+        int largest = 0;
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
+            for (int j = 0; j < this.getMatrixDimensionN(); ++j){
+                if (String.format("%."+precision+"f", this.get(i, j).doubleValue()).length() > largest)
+                    largest = String.format("%."+precision+"f", this.get(i, j).doubleValue()).length();
+            }
+        }
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
+            for (int j = 0; j < this.getMatrixDimensionN(); ++j){
+                System.out.print(String.format("%"+largest+"."+precision+"f", this.get(i, j).doubleValue()) + " ");
+            }
+            System.out.println();
+        }
+    }
 }

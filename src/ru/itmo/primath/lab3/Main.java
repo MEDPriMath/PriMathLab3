@@ -1,5 +1,7 @@
 package ru.itmo.primath.lab3;
 
+import ru.itmo.primath.lab3.generators.DiagonallyDominantMatrixGenerator;
+import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.invertible.InvertMatrix;
 import ru.itmo.primath.lab3.lu.LUDecomposition;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
@@ -7,7 +9,6 @@ import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 import ru.itmo.primath.lab3.solvers.LinearEquationsSolver;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,16 +27,13 @@ public class Main {
         }*/
 
         ArrayMatrix<Integer> arrayMatrix = new ArrayMatrix<>(new Integer[][]{
-                {1, 1},
-                {8, 1},
+                {1, 1, 5, 0},
+                {8, 1, 0, 0},
+                {0, 3, 3, 1},
+                {1, 15, 5, 4}
         });
         CSRMatrix<Integer> csrMatrix = new CSRMatrix<>(arrayMatrix, 0);
-        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
-                System.out.print(csrMatrix.get(i, j) + " ");
-            }
-            System.out.println();
-        }
+        csrMatrix.print();
 
         LUDecomposition<Integer> luDecomposition = new LUDecomposition<>(csrMatrix, 0, 1);
         luDecomposition.decompose();
@@ -43,55 +41,35 @@ public class Main {
         Matrix<Double> u = luDecomposition.getuMatrix();
 
         System.out.println("l");
-        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
-                System.out.print(l.get(i, j) + " ");
-            }
-            System.out.println();
-        }
+        l.print();
 
         System.out.println("u");
-        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
-                System.out.print(u.get(i, j) + " ");
-            }
-            System.out.println();
-        }
+        u.print();
 
         System.out.println("Check1: ");
         Matrix<Double> checkMatrix = l.multiply(u);
-        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
-                System.out.print(checkMatrix.get(i, j) + " ");
-            }
-            System.out.println();
-        }
+        checkMatrix.print();
 
         InvertMatrix<Integer> invert = new InvertMatrix<>(csrMatrix, 0, 1);
         invert.invert();
         Matrix<Double> invertMatrix = invert.getInvertibleMatrix();
 
         System.out.println("invert: ");
-        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
-                System.out.print(invertMatrix.get(i, j) + " ");
-            }
-            System.out.println();
-        }
+        invertMatrix.print();
 
         Matrix<Double> checkMatrix1 = csrMatrix.multiply(invertMatrix);
 
         System.out.println("Check2: ");
-        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
-                System.out.print(checkMatrix1.get(i, j) + " ");
-            }
-            System.out.println();
-        }
+        checkMatrix1.print();
 
-        LinearEquationsSolver<Integer> equationsSolver = new LinearEquationsSolver<>(csrMatrix, Arrays.asList(1,2), 0, 1);
+        LinearEquationsSolver<Integer> equationsSolver = new LinearEquationsSolver<>(csrMatrix, Arrays.asList(6,2,14,1), 0, 1);
 
         List<Double> ans = equationsSolver.solve();
         System.out.println(ans);
+
+        MatrixGenerator matrixGenerator = new DiagonallyDominantMatrixGenerator();
+        Matrix<Integer> m = matrixGenerator.generate(8);
+        System.out.println("generated");
+        m.print();
     }
 }
