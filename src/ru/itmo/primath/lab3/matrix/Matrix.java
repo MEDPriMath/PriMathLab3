@@ -32,7 +32,7 @@ public abstract class Matrix<T extends Number> {
             throw new IllegalArgumentException();
         ArrayMatrix<Double> resultMatrix = new ArrayMatrix<>(this.matrixDimensionM, otherMatrix.matrixDimensionN);
         for (int i = 0; i < matrixDimensionM; ++i){
-            for (int j = 0; j < matrixDimensionN; ++j){
+            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
                 Double elem = 0d;
                 for (int k = 0; k < matrixDimensionN; ++k){
                     elem += this.get(i, k).doubleValue() * otherMatrix.get(k, j).doubleValue();
