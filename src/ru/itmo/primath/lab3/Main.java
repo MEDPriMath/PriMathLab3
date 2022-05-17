@@ -1,6 +1,7 @@
 package ru.itmo.primath.lab3;
 
 import ru.itmo.primath.lab3.generators.DiagonallyDominantMatrixGenerator;
+import ru.itmo.primath.lab3.generators.HilbertMatrixGenerator;
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.invertible.InvertMatrix;
 import ru.itmo.primath.lab3.lu.LUDecomposition;
@@ -9,6 +10,7 @@ import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 import ru.itmo.primath.lab3.solvers.LinearEquationsSolver;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,9 +69,13 @@ public class Main {
         List<Double> ans = equationsSolver.solve();
         System.out.println(ans);
 
-        MatrixGenerator matrixGenerator = new DiagonallyDominantMatrixGenerator(1);
-        Matrix<Integer> m = matrixGenerator.generate(8);
-        System.out.println("generated");
-        m.print(3);
+        List<MatrixGenerator> matrixGenerators = new ArrayList<>();
+        matrixGenerators.add(new DiagonallyDominantMatrixGenerator(1));
+        matrixGenerators.add(new HilbertMatrixGenerator());
+        matrixGenerators.forEach(matrixGenerator -> {
+            Matrix<Integer> m = matrixGenerator.generate(8);
+            System.out.println("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
+            m.print(3);
+        });
     }
 }
