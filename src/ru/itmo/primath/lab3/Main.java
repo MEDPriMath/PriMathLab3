@@ -8,6 +8,7 @@ import ru.itmo.primath.lab3.lu.LUDecomposition;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
+import ru.itmo.primath.lab3.solvers.JacobiIterationLinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LULinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
 
@@ -67,13 +68,15 @@ public class Main {
 
         LULinearEquationSolver<Integer> equationsSolver = new LULinearEquationSolver<>(0, 1);
 
-        List<Double> ans = equationsSolver.solve(csrMatrix, Arrays.asList(6,2,14,1));
+        List<Double> ans = equationsSolver.solve(csrMatrix, Arrays.asList(6d,2d,14d,1d));
         System.out.println(ans);
 
         List<LinearEquationSolver<Double>> linearEquationSolvers = new ArrayList<>();
         linearEquationSolvers.add(new LULinearEquationSolver<Double>(0d, 1d));
+        linearEquationSolvers.add(new JacobiIterationLinearEquationSolver<>(10));
+
         List<MatrixGenerator> matrixGenerators = new ArrayList<>();
-        for (int k = 1; k < 100; ++k)
+        for (int k = 1; k < 5; ++k)
             matrixGenerators.add(new DiagonallyDominantMatrixGenerator(k));
         matrixGenerators.add(new HilbertMatrixGenerator());
 

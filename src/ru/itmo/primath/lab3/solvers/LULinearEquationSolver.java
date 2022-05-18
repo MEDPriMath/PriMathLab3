@@ -18,7 +18,7 @@ public class LULinearEquationSolver<T extends Number> implements LinearEquationS
     }
 
     @Override
-    public List<Double> solve(Matrix<T> matrix, List<T> b){
+    public List<Double> solve(Matrix<T> matrix, List<Double> b){
         if (!matrix.isSquare())
             throw new IllegalArgumentException();
         if (matrix.getMatrixDimensionM() != b.size())
