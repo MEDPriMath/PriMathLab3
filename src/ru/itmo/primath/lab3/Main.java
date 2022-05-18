@@ -1,22 +1,20 @@
 package ru.itmo.primath.lab3;
 
+import ru.itmo.primath.lab3.checkers.LUCheck;
+import ru.itmo.primath.lab3.checkers.SolveChecker;
 import ru.itmo.primath.lab3.generators.DiagonallyDominantMatrixGenerator;
 import ru.itmo.primath.lab3.generators.HilbertMatrixGenerator;
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.generators.RandomMatrixGenerator;
-import ru.itmo.primath.lab3.invertible.InvertMatrix;
-import ru.itmo.primath.lab3.lu.LUDecomposition;
 import ru.itmo.primath.lab3.markdown.MarkdownDocument;
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
-import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 import ru.itmo.primath.lab3.solvers.JacobiIterationLinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LULinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 

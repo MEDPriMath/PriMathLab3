@@ -1,8 +1,7 @@
-package ru.itmo.primath.lab3;
+package ru.itmo.primath.lab3.checkers;
 
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.lu.LUDecomposition;
-import ru.itmo.primath.lab3.markdown.MarkdownDocument;
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownHeader;
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownTable;

@@ -1,14 +1,11 @@
-package ru.itmo.primath.lab3;
+package ru.itmo.primath.lab3.checkers;
 
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
-import ru.itmo.primath.lab3.markdown.MarkdownDocument;
 import ru.itmo.primath.lab3.markdown.blocks.*;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.itmo.primath.lab3;
+package ru.itmo.primath.lab3.checkers;
 
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 
