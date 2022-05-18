@@ -27,10 +27,23 @@ public abstract class Matrix<T extends Number> {
         return matrixDimensionN;
     }
 
+    public Matrix<Double> sum(Matrix<? extends Number> otherMatrix){
+        if (this.getMatrixDimensionM() != otherMatrix.getMatrixDimensionM() || this.getMatrixDimensionN() != otherMatrix.getMatrixDimensionN())
+            throw new IllegalArgumentException();
+
+        Matrix<Double> resultMatrix = new ArrayMatrix<>(this.matrixDimensionM, this.matrixDimensionN);
+        for (int i = 0; i < matrixDimensionM; ++i){
+            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
+                resultMatrix.set(this.get(i, j).doubleValue() + otherMatrix.get(i, j).doubleValue(), i, j);
+            }
+        }
+
+        return resultMatrix;
+    }
     public Matrix<Double> multiply(Matrix<? extends Number> otherMatrix){
         if (this.matrixDimensionN != otherMatrix.matrixDimensionM)
             throw new IllegalArgumentException();
-        ArrayMatrix<Double> resultMatrix = new ArrayMatrix<>(this.matrixDimensionM, otherMatrix.matrixDimensionN);
+        Matrix<Double> resultMatrix = new ArrayMatrix<>(this.matrixDimensionM, otherMatrix.matrixDimensionN);
         for (int i = 0; i < matrixDimensionM; ++i){
             for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
                 Double elem = 0d;
