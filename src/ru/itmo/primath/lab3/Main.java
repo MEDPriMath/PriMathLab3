@@ -5,17 +5,20 @@ import ru.itmo.primath.lab3.generators.HilbertMatrixGenerator;
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.invertible.InvertMatrix;
 import ru.itmo.primath.lab3.lu.LUDecomposition;
+import ru.itmo.primath.lab3.markdown.entities.MarkdownTable;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
-import ru.itmo.primath.lab3.solvers.LinearEquationsSolver;
+import ru.itmo.primath.lab3.solvers.LULinearEquationSolver;
+import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("Here we go again");
         /*List<Integer> data = Arrays.asList(1, 1, 1, 3, 2);
         List<Integer> indices = Arrays.asList(0, 2, 1, 0, 1);
@@ -64,18 +67,23 @@ public class Main {
         System.out.println("Check2: ");
         checkMatrix1.print();
 
-        LinearEquationsSolver<Integer> equationsSolver = new LinearEquationsSolver<>(csrMatrix, Arrays.asList(6,2,14,1), 0, 1);
+        LULinearEquationSolver<Integer> equationsSolver = new LULinearEquationSolver<>(0, 1);
 
-        List<Double> ans = equationsSolver.solve();
+        List<Double> ans = equationsSolver.solve(csrMatrix, Arrays.asList(6,2,14,1));
         System.out.println(ans);
 
+        List<LinearEquationSolver<Double>> linearEquationSolvers = new ArrayList<>();
+        linearEquationSolvers.add(new LULinearEquationSolver<Double>(0d, 1d));
         List<MatrixGenerator> matrixGenerators = new ArrayList<>();
-        matrixGenerators.add(new DiagonallyDominantMatrixGenerator(1));
+        for (int k = 1; k < 100; ++k)
+            matrixGenerators.add(new DiagonallyDominantMatrixGenerator(k));
         matrixGenerators.add(new HilbertMatrixGenerator());
-        matrixGenerators.forEach(matrixGenerator -> {
-            Matrix<Integer> m = matrixGenerator.generate(8);
-            System.out.println("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
-            m.print(3);
-        });
+
+        SolveChecker solveChecker = new SolveChecker(matrixGenerators, linearEquationSolvers);
+        solveChecker.check(4);
+
+//        FileWriter fileWriter = new FileWriter("report.md");
+//        fileWriter.write(new MarkdownTable(csrMatrix).toMarkdown());
+//        fileWriter.close();
     }
 }

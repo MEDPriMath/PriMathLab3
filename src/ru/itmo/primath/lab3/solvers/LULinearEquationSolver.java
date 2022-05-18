@@ -6,24 +6,24 @@ import ru.itmo.primath.lab3.matrix.Matrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinearEquationsSolver<T extends Number> {
+public class LULinearEquationSolver<T extends Number> implements LinearEquationSolver<T> {
     private Matrix<T> matrix;
     List<T> b = new ArrayList<>();
     private T zero;
     private T identityElement;
 
-    public LinearEquationsSolver(Matrix<T> matrix, List<T> b, T zero, T identityElement) {
-        if (!matrix.isSquare())
-            throw new IllegalArgumentException();
-        if (matrix.getMatrixDimensionM() != b.size())
-            throw new IllegalArgumentException();
-        this.matrix = matrix;
-        this.b = new ArrayList<>(b);
+    public LULinearEquationSolver(T zero, T identityElement) {
         this.zero = zero;
         this.identityElement = identityElement;
     }
 
-    public List<Double> solve(){
+    @Override
+    public List<Double> solve(Matrix<T> matrix, List<T> b){
+        if (!matrix.isSquare())
+            throw new IllegalArgumentException();
+        if (matrix.getMatrixDimensionM() != b.size())
+            throw new IllegalArgumentException();
+
         int n = matrix.getMatrixDimensionN();
 
         LUDecomposition<T> luDecomposition = new LUDecomposition<>(matrix, zero, identityElement);
