@@ -4,12 +4,24 @@ import ru.itmo.primath.lab3.matrix.Matrix;
 
 public class MarkdownTable implements MarkdownBlock {
     private Object[][] table;
+    private boolean allBold;
 
     public MarkdownTable(Object[][] table) {
-        this.table = table;
+        this(table, false);
     }
 
-    public MarkdownTable(Matrix<?> matrix){
+    public MarkdownTable(Object[][] table, boolean allBold) {
+        this.table = table;
+        this.allBold = allBold;
+    }
+
+    public MarkdownTable(Matrix<?> matrix) {
+        this(matrix, false);
+    }
+
+    public MarkdownTable(Matrix<?> matrix, boolean allBold){
+        this.allBold = allBold;
+
         this.table = new Object[matrix.getMatrixDimensionM()][matrix.getMatrixDimensionN()];
         for (int i = 0; i < matrix.getMatrixDimensionM(); ++i){
             for (int j = 0; j < matrix.getMatrixDimensionN(); ++j){
@@ -38,11 +50,23 @@ public class MarkdownTable implements MarkdownBlock {
         for (int i = 1; i < height; i++){
             stringBuilder.append("| ");
             for (int j = 0; j < width; j++){
-                stringBuilder.append(table[i][j].toString()).append(" |");
+                if (allBold)
+                    stringBuilder.append("**".concat(table[i][j].toString())).append("** |");
+                else
+                    stringBuilder.append(table[i][j].toString()).append(" |");
             }
             stringBuilder.append("\n");
         }
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public String toString(){
+        try {
+            return toMarkdown();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

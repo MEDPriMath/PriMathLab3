@@ -28,7 +28,7 @@ public class SolveChecker {
         MarkdownDocument markdownDocument = new MarkdownDocument();
 
         linearEquationSolvers.forEach(linearEquationSolver -> {
-            MarkdownBlock solver = new MarkdownBold(linearEquationSolver.getClass().getSimpleName());
+            MarkdownBlock solver = new MarkdownBold(linearEquationSolver.getClass().getSimpleName(), true);
             markdownDocument.AddBlock(solver);
             matrixGenerators.forEach(matrixGenerator -> {
 
@@ -38,7 +38,7 @@ public class SolveChecker {
                 markdownDocument.AddBlock(generated);
                 System.out.println("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
 
-                MarkdownBlock genMatrix = new MarkdownTable(generatedMatrix);
+                MarkdownBlock genMatrix = new MarkdownTable(generatedMatrix, true);
                 markdownDocument.AddBlock(genMatrix);
                 generatedMatrix.print(3);
 

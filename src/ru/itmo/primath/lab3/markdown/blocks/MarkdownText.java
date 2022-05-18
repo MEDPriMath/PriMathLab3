@@ -11,4 +11,12 @@ public class MarkdownText implements MarkdownBlock{
     public String toMarkdown() {
         return text.concat("\n");
     }
+    @Override
+    public String toString(){
+        try {
+            return toMarkdown();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
