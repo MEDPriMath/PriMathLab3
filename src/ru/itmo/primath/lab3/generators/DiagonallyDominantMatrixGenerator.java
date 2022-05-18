@@ -5,7 +5,7 @@ import ru.itmo.primath.lab3.matrix.Matrix;
 
 import java.util.Random;
 
-public class DiagonallyDominantMatrixGenerator implements MatrixGenerator{
+public class DiagonallyDominantMatrixGenerator<T extends Number> implements MatrixGenerator<T>{
     private int k;
 
     public DiagonallyDominantMatrixGenerator(int k) {
@@ -13,7 +13,7 @@ public class DiagonallyDominantMatrixGenerator implements MatrixGenerator{
     }
 
     @Override
-    public <T extends Number> Matrix<T> generate(int n) {
+    public Matrix<T> generate(int n) {
         if (n < 0)
             throw new IllegalArgumentException();
         Matrix<T> matrix = new ArrayMatrix<T>(n);

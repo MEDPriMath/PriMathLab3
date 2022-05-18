@@ -3,6 +3,7 @@ package ru.itmo.primath.lab3;
 import ru.itmo.primath.lab3.generators.DiagonallyDominantMatrixGenerator;
 import ru.itmo.primath.lab3.generators.HilbertMatrixGenerator;
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
+import ru.itmo.primath.lab3.generators.RandomMatrixGenerator;
 import ru.itmo.primath.lab3.invertible.InvertMatrix;
 import ru.itmo.primath.lab3.lu.LUDecomposition;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
@@ -15,6 +16,7 @@ import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -30,13 +32,18 @@ public class Main {
             System.out.println();
         }*/
 
-        ArrayMatrix<Integer> arrayMatrix = new ArrayMatrix<>(new Integer[][]{
+        List<MatrixGenerator> matrixGenerators1 = new ArrayList<>();
+        matrixGenerators1.add(new RandomMatrixGenerator(() -> new Random().nextInt(0, 11)));
+        LUCheck luCheck = new LUCheck(matrixGenerators1);
+        luCheck.Check(10);
+
+        Matrix<Integer> matrix = new ArrayMatrix<>(new Integer[][]{
                 {1, 1, 5, 0},
                 {8, 1, 0, 0},
                 {0, 3, 3, 1},
                 {1, 15, 5, 4}
         });
-        CSRMatrix<Integer> csrMatrix = new CSRMatrix<>(arrayMatrix, 0);
+        CSRMatrix<Integer> csrMatrix = new CSRMatrix<>(matrix, 0);
         csrMatrix.print();
 
         LUDecomposition<Integer> luDecomposition = new LUDecomposition<>(csrMatrix, 0, 1);
