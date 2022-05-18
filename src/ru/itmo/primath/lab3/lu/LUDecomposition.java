@@ -1,6 +1,7 @@
 package ru.itmo.primath.lab3.lu;
 
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
+import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 
 public class LUDecomposition<T extends Number> {
@@ -24,8 +25,8 @@ public class LUDecomposition<T extends Number> {
 
     public void decompose(){
         int n = matrix.getMatrixDimensionM();
-        ArrayMatrix<Double> lMatrix = new ArrayMatrix<>(n);
-        ArrayMatrix<Double> uMatrix = new ArrayMatrix<>(n);
+        Matrix<Double> lMatrix = new CSRMatrix<>(n, zero.doubleValue());
+        Matrix<Double> uMatrix = new CSRMatrix<>(n, zero.doubleValue());
         for (int i = 0; i < n; ++i){
             for (int j = 0; j < n; ++j){
                 uMatrix.set(zero.doubleValue(), i, j);

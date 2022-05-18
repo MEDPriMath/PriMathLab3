@@ -9,6 +9,7 @@ import ru.itmo.primath.lab3.generators.RandomMatrixGenerator;
 import ru.itmo.primath.lab3.markdown.MarkdownDocument;
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
+import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 import ru.itmo.primath.lab3.solvers.JacobiIterationLinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LULinearEquationSolver;
@@ -32,18 +33,25 @@ public class Main {
             System.out.println();
         }*/
 
-        List<MatrixGenerator> matrixGenerators1 = new ArrayList<>();
-        matrixGenerators1.add(new RandomMatrixGenerator(() -> new Random().nextInt(1, 11)));
-        LUCheck luCheck = new LUCheck(matrixGenerators1);
-        luCheck.check(5);
-        List<MarkdownBlock> markdownBlocks1 = luCheck.getMarkdownBlocks();
-
         Matrix<Integer> matrix = new ArrayMatrix<>(new Integer[][]{
                 {1, 1, 5, 0},
                 {8, 1, 0, 0},
                 {0, 3, 3, 1},
                 {1, 15, 5, 4}
         });
+
+        Matrix m = new CSRMatrix(matrix, 0);
+        m.print();
+        System.out.println();
+        m.set(3, 2, 0);
+        m.print();
+
+        List<MatrixGenerator> matrixGenerators1 = new ArrayList<>();
+        matrixGenerators1.add(new RandomMatrixGenerator(() -> new Random().nextInt(1, 101)));
+        LUCheck luCheck = new LUCheck(matrixGenerators1);
+        luCheck.check(5);
+        List<MarkdownBlock> markdownBlocks1 = luCheck.getMarkdownBlocks();
+
 
         List<LinearEquationSolver<Double>> linearEquationSolvers = new ArrayList<>();
         linearEquationSolvers.add(new LULinearEquationSolver<Double>(0d, 1d));

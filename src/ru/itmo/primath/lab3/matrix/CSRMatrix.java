@@ -18,6 +18,21 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
         this.indPtr = new ArrayList<>(indPtr);
     }
 
+    public CSRMatrix(int dimensionM, int dimensionN, T zero) {
+        super(dimensionM, dimensionN);
+        this.zero = zero;
+        this.data = new ArrayList<>();
+        this.indices = new ArrayList<>();
+        this.indPtr = new ArrayList<>();
+        for (int i = 0; i < dimensionM + 1; ++i){
+            indPtr.add(1);
+        }
+    }
+
+    public CSRMatrix(int dimension, T zero) {
+        this(dimension, dimension, zero);
+    }
+
     public CSRMatrix(int dimension, T zero, List<T> data, List<Integer> indices, List<Integer> indPtr) {
         this(dimension, dimension, zero, data, indices, indPtr);
         this.zero = zero;
@@ -73,7 +88,42 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
         if (col < 0 || col >= matrixDimensionN)
             throw new ArrayIndexOutOfBoundsException();
 
-        ArrayMatrix<T> matrix = new ArrayMatrix<>(this);
+        int elementsBefore = this.indPtr.get(row) - this.indPtr.get(0);
+        int elementsInRow = countElementsInRow(row);
+
+        for (int i = elementsBefore; i < elementsBefore + elementsInRow; ++i) {
+            if (this.indices.get(i) == col) {
+                this.data.set(i, elem);
+                return;
+            }
+            if (this.indices.get(i) > col){
+                for (int k = row + 1; k < indPtr.size(); ++k)
+                    indPtr.set(k, indPtr.get(k) + 1);
+                this.data.add(zero);
+                this.indices.add(0);
+                for (int k = this.data.size() - 2; k >= i; --k){
+                    this.data.set(k + 1, this.data.get(k));
+                    this.indices.set(k + 1, this.indices.get(k));
+                }
+                this.data.set(i, elem);
+                this.indices.set(i, col);
+                return;
+            }
+        }
+        for (int k = row + 1; k < indPtr.size(); ++k)
+            indPtr.set(k, indPtr.get(k) + 1);
+        this.data.add(zero);
+        this.indices.add(0);
+        for (int k = this.data.size() - 2; k >= elementsBefore + elementsInRow; --k){
+            this.data.set(k + 1, this.data.get(k));
+            this.indices.set(k + 1, this.indices.get(k));
+        }
+        this.data.set(elementsBefore + elementsInRow, elem);
+        this.indices.set(elementsBefore + elementsInRow, col);
+
+
+
+        /*ArrayMatrix<T> matrix = new ArrayMatrix<>(this);
         matrix.set(elem, row, col);
         List<T> data = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
@@ -93,7 +143,7 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
         }
         this.data = data;
         this.indices = indices;
-        this.indPtr = indPtr;
+        this.indPtr = indPtr;*/
     }
 
     private int countElementsInRow(int row) {
