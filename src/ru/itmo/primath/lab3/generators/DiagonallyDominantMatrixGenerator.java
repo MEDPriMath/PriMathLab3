@@ -27,8 +27,15 @@ public class DiagonallyDominantMatrixGenerator implements MatrixGenerator{
             }
         }
         for (int i = 0; i < n; ++i){
-            matrix.set((T) Double.valueOf(-sum + Math.pow(10, -k)), i, i);
+            double temp = 0;
+            for (int k = 0; k < n; ++k){
+                if (k == i)
+                    continue;
+                temp += matrix.get(i, k).doubleValue() + matrix.get(k, i).doubleValue();
+            }
+            matrix.set((T) Double.valueOf(-temp + Math.pow(10, -k)), i, i);
         }
+//        matrix.set((T) Double.valueOf(Math.pow(10, -k)), n - 1, n - 1);
 
         return matrix;
     }

@@ -73,7 +73,7 @@ public class Main {
 
         List<LinearEquationSolver<Double>> linearEquationSolvers = new ArrayList<>();
         linearEquationSolvers.add(new LULinearEquationSolver<Double>(0d, 1d));
-        linearEquationSolvers.add(new JacobiIterationLinearEquationSolver<>(10));
+        linearEquationSolvers.add(new JacobiIterationLinearEquationSolver<>(5));
 
         List<MatrixGenerator> matrixGenerators = new ArrayList<>();
         for (int k = 1; k < 5; ++k)
@@ -81,7 +81,7 @@ public class Main {
         matrixGenerators.add(new HilbertMatrixGenerator());
 
         SolveChecker solveChecker = new SolveChecker(matrixGenerators, linearEquationSolvers);
-        solveChecker.check(4);
+        solveChecker.check(10);
 
 //        FileWriter fileWriter = new FileWriter("report.md");
 //        fileWriter.write(new MarkdownTable(csrMatrix).toMarkdown());

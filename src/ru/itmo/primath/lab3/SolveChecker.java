@@ -56,6 +56,10 @@ public class SolveChecker {
                 System.out.println("solution: ");
                 List<Double> solution = linearEquationSolver.solve(generatedMatrix, b);
                 System.out.println(solution);
+
+                MarkdownBlock solutionBlock = new MarkdownBold("Solution: " + solution.toString(), true);
+                markdownDocument.AddBlock(solutionBlock);
+
                 double sum = 0;
                 for (int i = 0; i < matrixSize; ++i){
                     sum += Math.abs((x.get(i, 0) - solution.get(i)) / x.get(i, 0));
