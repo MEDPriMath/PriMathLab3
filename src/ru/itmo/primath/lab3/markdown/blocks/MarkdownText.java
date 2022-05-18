@@ -9,7 +9,7 @@ public class MarkdownText implements MarkdownBlock{
 
     @Override
     public String toMarkdown() {
-        return text.concat("\n");
+        return text.replaceAll("\n$", "").concat("\n");
     }
     @Override
     public String toString(){

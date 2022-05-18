@@ -2,10 +2,7 @@ package ru.itmo.primath.lab3;
 
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.markdown.MarkdownDocument;
-import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
-import ru.itmo.primath.lab3.markdown.blocks.MarkdownBold;
-import ru.itmo.primath.lab3.markdown.blocks.MarkdownTable;
-import ru.itmo.primath.lab3.markdown.blocks.MarkdownText;
+import ru.itmo.primath.lab3.markdown.blocks.*;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
@@ -15,31 +12,34 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolveChecker {
+public class SolveChecker implements MatrixAlgorithmChecker {
     private List<MatrixGenerator> matrixGenerators;
     private List<LinearEquationSolver<Double>> linearEquationSolvers;
+    private List<MarkdownBlock> markdownBlocks = new ArrayList<>();
 
     public SolveChecker(List<MatrixGenerator> matrixGenerators, List<LinearEquationSolver<Double>> linearEquationSolvers) {
         this.matrixGenerators = new ArrayList<>(matrixGenerators);
         this.linearEquationSolvers = new ArrayList<>(linearEquationSolvers);
     }
 
-    public void check(int matrixSize) throws IOException {
-        MarkdownDocument markdownDocument = new MarkdownDocument();
+    @Override
+    public void check(int matrixSize) {
+
+        markdownBlocks.add(new MarkdownHeader("Check solution for different matrix and solvers", 1));
 
         linearEquationSolvers.forEach(linearEquationSolver -> {
             MarkdownBlock solver = new MarkdownBold(linearEquationSolver.getClass().getSimpleName(), true);
-            markdownDocument.AddBlock(solver);
+            markdownBlocks.add(solver);
             matrixGenerators.forEach(matrixGenerator -> {
 
                 Matrix<Double> generatedMatrix = matrixGenerator.generate(matrixSize);
 
                 MarkdownBlock generated = new MarkdownText("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
-                markdownDocument.AddBlock(generated);
+                markdownBlocks.add(generated);
                 System.out.println("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
 
                 MarkdownBlock genMatrix = new MarkdownTable(generatedMatrix, true);
-                markdownDocument.AddBlock(genMatrix);
+                markdownBlocks.add(genMatrix);
                 generatedMatrix.print(3);
 
                 Matrix<Integer> x = new ArrayMatrix<>(matrixSize, 1);
@@ -58,7 +58,7 @@ public class SolveChecker {
                 System.out.println(solution);
 
                 MarkdownBlock solutionBlock = new MarkdownBold("Solution: " + solution.toString(), true);
-                markdownDocument.AddBlock(solutionBlock);
+                markdownBlocks.add(solutionBlock);
 
                 double sum = 0;
                 for (int i = 0; i < matrixSize; ++i){
@@ -68,13 +68,14 @@ public class SolveChecker {
                 sum /= matrixSize;
 
                 MarkdownBlock error = new MarkdownText(String.format("Avg error = %.20f%%\n", sum * 100d));
-                markdownDocument.AddBlock(error);
+                markdownBlocks.add(error);
                 System.out.printf("Avg error = %.20f%%\n", sum * 100d);
             });
         });
+    }
 
-        FileWriter fileWriter = new FileWriter("report.md");
-        fileWriter.write(markdownDocument.toMarkdown());
-        fileWriter.close();
+    @Override
+    public List<MarkdownBlock> getMarkdownBlocks() {
+        return markdownBlocks;
     }
 }

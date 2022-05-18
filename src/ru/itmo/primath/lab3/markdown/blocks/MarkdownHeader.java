@@ -14,7 +14,7 @@ public class MarkdownHeader implements MarkdownBlock{
 
     @Override
     public String toMarkdown() {
-        return "#".repeat(level).concat(text);
+        return "#".repeat(level).concat(" ").concat(text.replaceAll("^ *", ""));
     }
 
     @Override

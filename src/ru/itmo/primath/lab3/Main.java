@@ -6,6 +6,8 @@ import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.generators.RandomMatrixGenerator;
 import ru.itmo.primath.lab3.invertible.InvertMatrix;
 import ru.itmo.primath.lab3.lu.LUDecomposition;
+import ru.itmo.primath.lab3.markdown.MarkdownDocument;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
@@ -33,9 +35,10 @@ public class Main {
         }*/
 
         List<MatrixGenerator> matrixGenerators1 = new ArrayList<>();
-        matrixGenerators1.add(new RandomMatrixGenerator(() -> new Random().nextInt(0, 11)));
+        matrixGenerators1.add(new RandomMatrixGenerator(() -> new Random().nextInt(1, 11)));
         LUCheck luCheck = new LUCheck(matrixGenerators1);
-        luCheck.Check(10);
+        luCheck.check(5);
+        List<MarkdownBlock> markdownBlocks1 = luCheck.getMarkdownBlocks();
 
         Matrix<Integer> matrix = new ArrayMatrix<>(new Integer[][]{
                 {1, 1, 5, 0},
@@ -43,40 +46,6 @@ public class Main {
                 {0, 3, 3, 1},
                 {1, 15, 5, 4}
         });
-        CSRMatrix<Integer> csrMatrix = new CSRMatrix<>(matrix, 0);
-        csrMatrix.print();
-
-        LUDecomposition<Integer> luDecomposition = new LUDecomposition<>(csrMatrix, 0, 1);
-        luDecomposition.decompose();
-        Matrix<Double> l = luDecomposition.getlMatrix();
-        Matrix<Double> u = luDecomposition.getuMatrix();
-
-        System.out.println("l");
-        l.print();
-
-        System.out.println("u");
-        u.print();
-
-        System.out.println("Check1: ");
-        Matrix<Double> checkMatrix = l.multiply(u);
-        checkMatrix.print();
-
-        InvertMatrix<Integer> invert = new InvertMatrix<>(csrMatrix, 0, 1);
-        invert.invert();
-        Matrix<Double> invertMatrix = invert.getInvertibleMatrix();
-
-        System.out.println("invert: ");
-        invertMatrix.print();
-
-        Matrix<Double> checkMatrix1 = csrMatrix.multiply(invertMatrix);
-
-        System.out.println("Check2: ");
-        checkMatrix1.print();
-
-        LULinearEquationSolver<Integer> equationsSolver = new LULinearEquationSolver<>(0, 1);
-
-        List<Double> ans = equationsSolver.solve(csrMatrix, Arrays.asList(6d,2d,14d,1d));
-        System.out.println(ans);
 
         List<LinearEquationSolver<Double>> linearEquationSolvers = new ArrayList<>();
         linearEquationSolvers.add(new LULinearEquationSolver<Double>(0d, 1d));
@@ -88,7 +57,15 @@ public class Main {
         matrixGenerators.add(new HilbertMatrixGenerator());
 
         SolveChecker solveChecker = new SolveChecker(matrixGenerators, linearEquationSolvers);
-        solveChecker.check(10);
+        solveChecker.check(5);
+        List<MarkdownBlock> markdownBlocks2 = solveChecker.getMarkdownBlocks();
+
+        List<MarkdownBlock> markdownBlocks = new ArrayList<>();
+        markdownBlocks.addAll(markdownBlocks1);
+        markdownBlocks.addAll(markdownBlocks2);
+
+        MarkdownDocument markdownDocument = new MarkdownDocument(markdownBlocks);
+        markdownDocument.toMarkdownFile("report.md");
 
 //        FileWriter fileWriter = new FileWriter("report.md");
 //        fileWriter.write(new MarkdownTable(csrMatrix).toMarkdown());

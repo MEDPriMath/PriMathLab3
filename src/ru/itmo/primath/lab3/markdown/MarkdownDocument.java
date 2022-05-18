@@ -2,6 +2,8 @@ package ru.itmo.primath.lab3.markdown;
 
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,22 @@ public class MarkdownDocument {
         markdownBlocks.add(markdownBlock);
     }
 
-    public String toMarkdown(){
+    public void toMarkdownFile(String filename) throws IOException {
+        FileWriter fileWriter = new FileWriter(filename);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        markdownBlocks.forEach(markdownBlock -> {
+            try {
+                stringBuilder.append(markdownBlock.toMarkdown()).append("\n");
+            } catch (Exception ignored) {
+            }
+        });
+
+        fileWriter.write(stringBuilder.toString());
+        fileWriter.close();
+    }
+
+    public String toMarkdownString(){
         StringBuilder stringBuilder = new StringBuilder();
         markdownBlocks.forEach(markdownBlock -> {
             try {
@@ -29,5 +46,10 @@ public class MarkdownDocument {
         });
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public String toString() {
+        return toMarkdownString();
     }
 }

@@ -16,16 +16,20 @@ public class MarkdownTable implements MarkdownBlock {
     }
 
     public MarkdownTable(Matrix<?> matrix) {
-        this(matrix, false);
+        this(matrix, 1, false);
     }
 
-    public MarkdownTable(Matrix<?> matrix, boolean allBold){
+    public MarkdownTable(Matrix<?> matrix, boolean allBold) {
+        this(matrix, 1, allBold);
+    }
+
+    public MarkdownTable(Matrix<?> matrix, int precision, boolean allBold){
         this.allBold = allBold;
 
         this.table = new Object[matrix.getMatrixDimensionM()][matrix.getMatrixDimensionN()];
         for (int i = 0; i < matrix.getMatrixDimensionM(); ++i){
             for (int j = 0; j < matrix.getMatrixDimensionN(); ++j){
-                this.table[i][j] = matrix.get(i, j);
+                this.table[i][j] = String.format("%."+precision+"f", matrix.get(i, j).doubleValue());
             }
         }
     }
