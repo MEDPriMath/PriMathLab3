@@ -37,9 +37,9 @@ public class MarkdownTable implements MarkdownBlock {
         if (height < 2)
             throw new Exception();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append('|');
+        stringBuilder.append("| ");
         for (int i = 0; i < width; i++){
-            stringBuilder.append(table[0][i].toString()).append(" |");
+            stringBuilder.append(table[0][i].toString()).append(" | ");
         }
         stringBuilder.append("\n| ");
         for (int i = 0; i < width; i++){
@@ -51,9 +51,9 @@ public class MarkdownTable implements MarkdownBlock {
             stringBuilder.append("| ");
             for (int j = 0; j < width; j++){
                 if (allBold)
-                    stringBuilder.append("**".concat(table[i][j].toString())).append("** |");
+                    stringBuilder.append(new MarkdownBold(table[i][j].toString())).append(" | ");
                 else
-                    stringBuilder.append(table[i][j].toString()).append(" |");
+                    stringBuilder.append(table[i][j].toString()).append(" | ");
             }
             stringBuilder.append("\n");
         }
