@@ -1,4 +1,4 @@
-package ru.itmo.primath.lab3.markdown.entities;
+package ru.itmo.primath.lab3.markdown.blocks;
 
 public class MarkdownText implements MarkdownBlock{
     private String text;

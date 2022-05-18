@@ -1,7 +1,6 @@
 package ru.itmo.primath.lab3.markdown;
 
-import ru.itmo.primath.lab3.markdown.entities.MarkdownBlock;
-import ru.itmo.primath.lab3.markdown.entities.MarkdownBold;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,10 +2,10 @@ package ru.itmo.primath.lab3;
 
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.markdown.MarkdownDocument;
-import ru.itmo.primath.lab3.markdown.entities.MarkdownBlock;
-import ru.itmo.primath.lab3.markdown.entities.MarkdownBold;
-import ru.itmo.primath.lab3.markdown.entities.MarkdownTable;
-import ru.itmo.primath.lab3.markdown.entities.MarkdownText;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownBold;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownTable;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownText;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 import ru.itmo.primath.lab3.solvers.LinearEquationSolver;

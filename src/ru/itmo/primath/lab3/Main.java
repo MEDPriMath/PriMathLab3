@@ -5,14 +5,12 @@ import ru.itmo.primath.lab3.generators.HilbertMatrixGenerator;
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.invertible.InvertMatrix;
 import ru.itmo.primath.lab3.lu.LUDecomposition;
-import ru.itmo.primath.lab3.markdown.entities.MarkdownTable;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 import ru.itmo.primath.lab3.solvers.LULinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
 
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
