@@ -7,7 +7,6 @@ import java.util.List;
 
 public class JacobiIterationLinearEquationSolver<T extends Number> implements LinearEquationSolver<T>{
 
-    private Matrix<T> matrix;
     List<T> b = new ArrayList<>();
     private int iterationsCount;
 

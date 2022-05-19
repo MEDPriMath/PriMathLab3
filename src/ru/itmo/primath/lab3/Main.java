@@ -2,10 +2,7 @@ package ru.itmo.primath.lab3;
 
 import ru.itmo.primath.lab3.checkers.LUCheck;
 import ru.itmo.primath.lab3.checkers.SolveChecker;
-import ru.itmo.primath.lab3.generators.DiagonallyDominantMatrixGenerator;
-import ru.itmo.primath.lab3.generators.HilbertMatrixGenerator;
-import ru.itmo.primath.lab3.generators.MatrixGenerator;
-import ru.itmo.primath.lab3.generators.RandomMatrixGenerator;
+import ru.itmo.primath.lab3.generators.*;
 import ru.itmo.primath.lab3.markdown.MarkdownDocument;
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
@@ -51,17 +48,25 @@ public class Main {
         solveChecker.check(10);
         List<MarkdownBlock> markdownBlocks2 = solveChecker.getMarkdownBlocks();
 
+        List<MatrixGenerator> matrixGenerators2 = new ArrayList<>();
+        matrixGenerators2.add(new RandomCSRMatrixGenerator<Integer>(3, () -> new Random().nextInt(1, 101)));
+
+        List<LinearEquationSolver<Double>> linearEquationSolvers1 = new ArrayList<>();
+        linearEquationSolvers1.add(new JacobiIterationLinearEquationSolver<>(5));
+
+        SolveChecker largeMatrixChecker = new SolveChecker(matrixGenerators2, linearEquationSolvers1);
+        largeMatrixChecker.check(10000);
+        List<MarkdownBlock> markdownBlocks3 = largeMatrixChecker.getMarkdownBlocks();
+
         List<MarkdownBlock> markdownBlocks = new ArrayList<>();
         markdownBlocks.addAll(markdownBlocks1);
         markdownBlocks.addAll(markdownBlocks2);
+        markdownBlocks.addAll(markdownBlocks3);
 
         MarkdownDocument markdownDocument = new MarkdownDocument(markdownBlocks);
         markdownDocument.toMarkdownFile("report.md");
 
         MarkdownDocument.toHTML("report.md", "index.html");
 
-//        FileWriter fileWriter = new FileWriter("report.md");
-//        fileWriter.write(new MarkdownTable(csrMatrix).toMarkdown());
-//        fileWriter.close();
     }
 }

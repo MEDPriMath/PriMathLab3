@@ -5,6 +5,9 @@ import ru.itmo.primath.lab3.matrix.Matrix;
 public class MarkdownTable implements MarkdownBlock {
     private Object[][] table;
     private boolean allBold;
+    private boolean isLarge = false;
+    private int width;
+    private int height;
 
     public MarkdownTable(Object[][] table) {
         this(table, false);
@@ -25,6 +28,12 @@ public class MarkdownTable implements MarkdownBlock {
 
     public MarkdownTable(Matrix<?> matrix, int precision, boolean allBold){
         this.allBold = allBold;
+        if (matrix.getMatrixDimensionM() > 50 || matrix.getMatrixDimensionN() > 50) {
+            width = matrix.getMatrixDimensionN();
+            height = matrix.getMatrixDimensionM();
+            isLarge = true;
+            return;
+        }
 
         this.table = new Object[matrix.getMatrixDimensionM()][matrix.getMatrixDimensionN()];
         for (int i = 0; i < matrix.getMatrixDimensionM(); ++i){
@@ -36,10 +45,11 @@ public class MarkdownTable implements MarkdownBlock {
 
     @Override
     public String toMarkdown() throws Exception {
+        if (isLarge)
+            return "*Matrix is too large: ".concat(this.width + "x" + this.height + "*\n");
         int width = table[0].length;
         int height = table.length;
-        if (width > 50 || height > 50)
-            return "*Matrix is too large: ".concat(width + "x" + height + "*\n");
+
         if (height < 2)
             throw new Exception();
         StringBuilder stringBuilder = new StringBuilder();

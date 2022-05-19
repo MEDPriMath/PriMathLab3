@@ -37,6 +37,10 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
         this(dimension, dimension, zero);
     }
 
+    public CSRMatrix(int dimension) {
+        this(dimension, dimension);
+    }
+
     public CSRMatrix(int dimension, T zero, List<T> data, List<Integer> indices, List<Integer> indPtr) {
         this(dimension, dimension, zero, data, indices, indPtr);
         this.zero = zero;

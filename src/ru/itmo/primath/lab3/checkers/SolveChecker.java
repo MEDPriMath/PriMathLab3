@@ -61,7 +61,7 @@ public class SolveChecker implements MatrixAlgorithmChecker {
 
                 System.out.println("solution: ");
                 List<Double> solution = linearEquationSolver.solve(generatedMatrix, b);
-//                System.out.println(solution);
+                System.out.println(solution.get(0));
 
                 MarkdownBlock solutionBlock;
                 if (solution.size() <= 50) {
