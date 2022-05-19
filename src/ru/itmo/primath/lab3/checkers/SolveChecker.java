@@ -25,6 +25,9 @@ public class SolveChecker implements MatrixAlgorithmChecker {
         markdownBlocks.add(new MarkdownHeader("Check solution for different matrix and solvers", 1, true));
 
         linearEquationSolvers.forEach(linearEquationSolver -> {
+            markdownBlocks.add(new MarkdownHeader(linearEquationSolver.getClass().getSimpleName(), 2, true));
+            markdownBlocks.add(new MarkdownQuote(linearEquationSolver.toString()));
+
             matrixGenerators.forEach(matrixGenerator -> {
 
                 Matrix<Double> generatedMatrix = matrixGenerator.generate(matrixSize);
@@ -65,7 +68,7 @@ public class SolveChecker implements MatrixAlgorithmChecker {
 
                 sum /= matrixSize;
 
-                MarkdownBlock error = new MarkdownText(String.format("Avg error = %.20f%%\n", sum * 100d));
+                MarkdownBlock error = new MarkdownText(String.format("Avg error = %.2f%%\n", sum * 100d));
                 markdownBlocks.add(error);
                 System.out.printf("Avg error = %.20f%%\n", sum * 100d);
             });

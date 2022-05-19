@@ -39,13 +39,13 @@ public class LULinearEquationSolver<T extends Number> implements LinearEquationS
             result.add(0d);
             y.add(0d);
         }
-        y.set(0, b.get(0).doubleValue());
+        y.set(0, b.get(0));
         for (int i = 1; i < n; i++){
             double temp = 0d;
             for (int k = 0; k < i; ++k){
                 temp += y.get(k) * l.get(i, k);
             }
-            y.set(i, b.get(i).doubleValue() - temp);
+            y.set(i, b.get(i) - temp);
         }
         result.set(n - 1, y.get(n - 1) / u.get(n - 1, n - 1));
         for (int i = n - 2; i >= 0; --i){
@@ -57,5 +57,29 @@ public class LULinearEquationSolver<T extends Number> implements LinearEquationS
         }
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Решим СЛАУ вида A∙x=b\n" +
+                "Разложим матрицу A на L и U матрицы\n" +
+                "L∙U∙x=b\n" +
+                "Обозначит U∙x=y\n" +
+                "Решим последовательно\n" +
+                "L∙y=b\n" +
+                "U∙x=y\n" +
+                "\n" +
+                "$$l\\_{11} \\cdot y\\_{1}=b\\_{1}$$\n" +
+                "\n" +
+                "$$l\\_{21} y\\_{1}+l\\_{22}y\\_{2}=b\\_{2}$$\n" +
+                "\n" +
+                "$$l\\_{31} y\\_{1}+l\\_{32}y\\_{2}+l\\_{33}y\\_{3}=b\\_{3}$$\n" +
+                "\n" +
+                "$$\\sum\\_{i=1}^{k}(l\\_{ki}y\\_{i})=b\\_{n}$$\n" +
+                "\n" +
+                "Так как $$l\\_{ii}=1$$\n" +
+                "\n" +
+                "$$y\\_{k}=b\\_{k}-\\sum\\_{i=1}^{k-1}$$\n " +
+                "";
     }
 }

@@ -47,4 +47,9 @@ public class JacobiIterationLinearEquationSolver<T extends Number> implements Li
 
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Работает и заебись!";
+    }
 }
