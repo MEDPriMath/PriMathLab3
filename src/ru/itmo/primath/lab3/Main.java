@@ -73,6 +73,8 @@ public class Main {
         MarkdownDocument markdownDocument = new MarkdownDocument(markdownBlocks);
         markdownDocument.toMarkdownFile("report.md");
 
+        MarkdownDocument.toHTML("report.md", "index.html");
+
 //        FileWriter fileWriter = new FileWriter("report.md");
 //        fileWriter.write(new MarkdownTable(csrMatrix).toMarkdown());
 //        fileWriter.close();

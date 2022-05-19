@@ -1,9 +1,13 @@
 package ru.itmo.primath.lab3.markdown;
 
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
+import ru.itmo.primath.lab3.markdown.description.DescriptionStorage;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +50,14 @@ public class MarkdownDocument {
         });
 
         return stringBuilder.toString();
+    }
+
+    public static void toHTML(String markdownFilename, String htmlFilename) throws IOException {
+        String markdown = Files.readString(Path.of(markdownFilename));
+
+        FileWriter fileWriter = new FileWriter(htmlFilename);
+        fileWriter.write(DescriptionStorage.htmlPre + "\n" + markdown + "\n" + DescriptionStorage.htmlPast);
+        fileWriter.close();
     }
 
     @Override

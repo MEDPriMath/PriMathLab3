@@ -22,14 +22,15 @@ public class SolveChecker implements MatrixAlgorithmChecker {
     @Override
     public void check(int matrixSize) {
 
-        markdownBlocks.add(new MarkdownHeader("Check solution for different matrix and solvers", 1));
+        markdownBlocks.add(new MarkdownHeader("Check solution for different matrix and solvers", 1, true));
 
         linearEquationSolvers.forEach(linearEquationSolver -> {
-            MarkdownBlock solver = new MarkdownBold(linearEquationSolver.getClass().getSimpleName(), true);
-            markdownBlocks.add(solver);
             matrixGenerators.forEach(matrixGenerator -> {
 
                 Matrix<Double> generatedMatrix = matrixGenerator.generate(matrixSize);
+
+                MarkdownBlock solver = new MarkdownBold(linearEquationSolver.getClass().getSimpleName(), true);
+                markdownBlocks.add(solver);
 
                 MarkdownBlock generated = new MarkdownText("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
                 markdownBlocks.add(generated);
