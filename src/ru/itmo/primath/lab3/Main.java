@@ -22,16 +22,6 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) throws Exception {
         System.out.println("Here we go again");
-        /*List<Integer> data = Arrays.asList(1, 1, 1, 3, 2);
-        List<Integer> indices = Arrays.asList(0, 2, 1, 0, 1);
-        List<Integer> indPtr = Arrays.asList(1, 3, 4, 6);
-        CSRMatrix2<Integer> csrMatrix = new CSRMatrix2<>(3, 3, 0, data, indices, indPtr);
-        for (int i = 0; i < csrMatrix.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < csrMatrix.getMatrixDimensionN(); ++j){
-                System.out.print(csrMatrix.get(i, j) + " ");
-            }
-            System.out.println();
-        }*/
 
         Matrix<Integer> matrix = new ArrayMatrix<>(new Integer[][]{
                 {1, 1, 5, 0},
@@ -39,6 +29,12 @@ public class Main {
                 {0, 3, 3, 1},
                 {1, 15, 5, 4}
         });
+
+        Matrix mm = matrix.multiply(matrix, CSRMatrix.class);
+        System.out.println(mm.getClass().getSimpleName());
+
+        Matrix mmm = matrix.multiply(matrix, ArrayMatrix.class);
+        System.out.println(mmm.getClass().getSimpleName());
 
         Matrix m = new CSRMatrix(matrix, 0);
         m.print();

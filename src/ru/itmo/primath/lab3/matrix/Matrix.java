@@ -1,5 +1,8 @@
 package ru.itmo.primath.lab3.matrix;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public abstract class Matrix<T extends Number> {
 
     protected int matrixDimensionM;
@@ -40,10 +43,47 @@ public abstract class Matrix<T extends Number> {
 
         return resultMatrix;
     }
+
+    public Matrix<Double> sum(Matrix<? extends Number> otherMatrix, Class type) throws Exception {
+        if (this.getMatrixDimensionM() != otherMatrix.getMatrixDimensionM() || this.getMatrixDimensionN() != otherMatrix.getMatrixDimensionN())
+            throw new IllegalArgumentException();
+
+        Constructor constructor = type.getConstructor(int.class, int.class);
+        Matrix<Double> resultMatrix = (Matrix<Double>) constructor.newInstance(this.matrixDimensionM, otherMatrix.matrixDimensionN);
+
+        for (int i = 0; i < matrixDimensionM; ++i){
+            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
+                resultMatrix.set(this.get(i, j).doubleValue() + otherMatrix.get(i, j).doubleValue(), i, j);
+            }
+        }
+
+        return resultMatrix;
+    }
+
     public Matrix<Double> multiply(Matrix<? extends Number> otherMatrix){
         if (this.matrixDimensionN != otherMatrix.matrixDimensionM)
             throw new IllegalArgumentException();
         Matrix<Double> resultMatrix = new ArrayMatrix<>(this.matrixDimensionM, otherMatrix.matrixDimensionN);
+        for (int i = 0; i < matrixDimensionM; ++i){
+            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
+                Double elem = 0d;
+                for (int k = 0; k < matrixDimensionN; ++k){
+                    elem += this.get(i, k).doubleValue() * otherMatrix.get(k, j).doubleValue();
+                }
+                resultMatrix.set(elem, i, j);
+            }
+        }
+
+        return resultMatrix;
+    }
+
+    public Matrix<Double> multiply(Matrix<? extends Number> otherMatrix, Class type) throws Exception {
+        if (this.matrixDimensionN != otherMatrix.matrixDimensionM)
+            throw new IllegalArgumentException();
+
+        Constructor constructor = type.getConstructor(int.class, int.class);
+
+        Matrix<Double> resultMatrix = (Matrix<Double>) constructor.newInstance(this.matrixDimensionM, otherMatrix.matrixDimensionN);
         for (int i = 0; i < matrixDimensionM; ++i){
             for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
                 Double elem = 0d;

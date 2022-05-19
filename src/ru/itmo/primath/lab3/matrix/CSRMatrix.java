@@ -18,6 +18,10 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
         this.indPtr = new ArrayList<>(indPtr);
     }
 
+    public CSRMatrix(int dimensionM, int dimensionN) {
+        this(dimensionM, dimensionN, (T) Double.valueOf(0));
+    }
+
     public CSRMatrix(int dimensionM, int dimensionN, T zero) {
         super(dimensionM, dimensionN);
         this.zero = zero;
