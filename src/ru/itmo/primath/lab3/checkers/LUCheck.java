@@ -34,7 +34,7 @@ public class LUCheck implements MatrixAlgorithmChecker {
 
             MarkdownBlock matrixBlock = new MarkdownTable(matrix, true);
             markdownBlocks.add(matrixBlock);
-            matrix.print();
+//            matrix.print();
 
             CSRMatrix<Double> csrMatrix = new CSRMatrix<>(matrix, 0d);
 
@@ -47,17 +47,33 @@ public class LUCheck implements MatrixAlgorithmChecker {
             markdownBlocks.add(textLBlock);
             System.out.println("L matrix:");
 
-            MarkdownBlock lMatrixBlock = new MarkdownTable(l, true);
-            markdownBlocks.add(lMatrixBlock);
-            l.print();
+            MarkdownBlock lMatrixTable = new MarkdownTable(l, true);
+            markdownBlocks.add(lMatrixTable);
+//            l.print();
+
+            MarkdownBlock checkLText;
+            if (l.isLowerTriangular()) {
+                checkLText = new MarkdownBold("L matrix is lower triangular", true);
+            } else {
+                checkLText = new MarkdownBold("L matrix is not lower triangular", true);
+            }
+            markdownBlocks.add(checkLText);
 
             MarkdownBlock textUBlock = new MarkdownText("U matrix:");
             markdownBlocks.add(textUBlock);
             System.out.println("U matrix:");
 
-            MarkdownBlock uMatrixBlock = new MarkdownTable(u, true);
-            markdownBlocks.add(uMatrixBlock);
-            u.print();
+            MarkdownBlock uMatrixTable = new MarkdownTable(u, true);
+            markdownBlocks.add(uMatrixTable);
+//            u.print();
+
+            MarkdownBlock checkUText;
+            if (u.isUpperTriangular()) {
+                checkUText = new MarkdownBold("U matrix is upper triangular",true);
+            } else {
+                checkUText = new MarkdownBold("U matrix is not upper triangular", true);
+            }
+            markdownBlocks.add(checkUText);
 
             MarkdownBlock checkTest = new MarkdownText("L∙U =");
             markdownBlocks.add(checkTest);
@@ -66,7 +82,16 @@ public class LUCheck implements MatrixAlgorithmChecker {
 
             MarkdownBlock checkLUTable = new MarkdownTable(checkLU, true);
             markdownBlocks.add(checkLUTable);
-            checkLU.print();
+//            checkLU.print();
+
+            MarkdownBlock checkLUText;
+            if (matrix.equals(checkLU))
+                checkLUText = new MarkdownBold("Matrix equals to source one");
+            else
+                checkLUText = new MarkdownBold("Matrix not equals to source one");
+
+            markdownBlocks.add(checkLUText);
+
 
             markdownBlocks.add(new MarkdownHeader("Check invert Matrix algorithm", 1, true));
 
@@ -86,6 +111,13 @@ public class LUCheck implements MatrixAlgorithmChecker {
             MarkdownBlock checkInvertTable = new MarkdownTable(checkInvert, true);
             markdownBlocks.add(checkInvertTable);
 
+            MarkdownBlock checkInvertText;
+            if (checkInvert.equals(Matrix.generateIdentityMatrix(checkInvert.getMatrixDimensionM()))){
+                checkInvertText = new MarkdownBold("It is Identity matrix");
+            } else {
+                checkInvertText = new MarkdownBold("It is not Identity matrix");
+            }
+            markdownBlocks.add(checkInvertText);
         });
     }
 

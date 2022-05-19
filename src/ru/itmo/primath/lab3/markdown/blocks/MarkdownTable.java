@@ -38,6 +38,8 @@ public class MarkdownTable implements MarkdownBlock {
     public String toMarkdown() throws Exception {
         int width = table[0].length;
         int height = table.length;
+        if (width > 50 || height > 50)
+            return "*Matrix is too large*\n";
         if (height < 2)
             throw new Exception();
         StringBuilder stringBuilder = new StringBuilder();

@@ -22,6 +22,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) throws Exception {
         System.out.println("Here we go again");
+        Matrix.generateIdentityMatrix(5).print();
 
         Matrix<Integer> matrix = new ArrayMatrix<>(new Integer[][]{
                 {1, 1, 5, 0},
@@ -30,22 +31,10 @@ public class Main {
                 {1, 15, 5, 4}
         });
 
-        Matrix mm = matrix.multiply(matrix, CSRMatrix.class);
-        System.out.println(mm.getClass().getSimpleName());
-
-        Matrix mmm = matrix.multiply(matrix, ArrayMatrix.class);
-        System.out.println(mmm.getClass().getSimpleName());
-
-        Matrix m = new CSRMatrix(matrix, 0);
-        m.print();
-        System.out.println();
-        m.set(3, 2, 0);
-        m.print();
-
         List<MatrixGenerator> matrixGenerators1 = new ArrayList<>();
         matrixGenerators1.add(new RandomMatrixGenerator(() -> new Random().nextInt(1, 101)));
         LUCheck luCheck = new LUCheck(matrixGenerators1);
-        luCheck.check(5);
+        luCheck.check(10);
         List<MarkdownBlock> markdownBlocks1 = luCheck.getMarkdownBlocks();
 
 

@@ -100,6 +100,33 @@ public abstract class Matrix<T extends Number> {
     public boolean isSquare(){
         return matrixDimensionM == matrixDimensionN;
     }
+    public boolean isLowerTriangular(){
+        if (!this.isSquare())
+            return false;
+
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
+            for (int j = i + 1; j < this.getMatrixDimensionN(); ++j){
+                if (Math.abs(this.get(i, j).doubleValue() - 0) > 10E-6)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isUpperTriangular(){
+        if (!this.isSquare())
+            return false;
+
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
+            for (int j = 0; j < i; ++j){
+                if (Math.abs(this.get(i, j).doubleValue() - 0) > 10E-6)
+                    return false;
+            }
+        }
+
+        return true;
+    }
 
     public void print() {
         print(1);
@@ -119,5 +146,41 @@ public abstract class Matrix<T extends Number> {
             }
             System.out.println();
         }
+    }
+
+    public static<T extends Number> Matrix<T> generateIdentityMatrix(int n){
+        if (n <= 0)
+            throw new IllegalArgumentException();
+
+        Matrix<T> matrix = new CSRMatrix<>(n, (T)Double.valueOf(0));
+
+        for (int i = 0; i < n; ++i){
+            matrix.set((T)Double.valueOf(1), i, i);
+        }
+
+        return matrix;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof Matrix)){
+            return false;
+        }
+
+        Matrix otherMatrix = (Matrix) obj;
+
+        if (this.getMatrixDimensionM() != otherMatrix.getMatrixDimensionM() || this.getMatrixDimensionN() != otherMatrix.getMatrixDimensionN())
+            return false;
+
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
+            for (int j = 0; j < this.getMatrixDimensionN(); ++j){
+                if (Math.abs(this.get(i, j).doubleValue() - otherMatrix.get(i, j).doubleValue()) > 10E-6)
+                    return false;
+            }
+        }
+
+        return true;
+
     }
 }
