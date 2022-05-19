@@ -12,9 +12,14 @@ public class JacobiIterationLinearEquationSolver<T extends Number> implements Li
     private int iterationsCount;
 
     public JacobiIterationLinearEquationSolver(int iterationsCount) {
+        if (iterationsCount <= 0)
+            throw new IllegalArgumentException();
         this.iterationsCount = iterationsCount;
     }
 
+    public int getIterationsCount() {
+        return iterationsCount;
+    }
 
     @Override
     public List<Double> solve(Matrix<T> matrix, List<Double> b) {

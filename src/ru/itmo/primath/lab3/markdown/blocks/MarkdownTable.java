@@ -39,7 +39,7 @@ public class MarkdownTable implements MarkdownBlock {
         int width = table[0].length;
         int height = table.length;
         if (width > 50 || height > 50)
-            return "*Matrix is too large*\n";
+            return "*Matrix is too large: ".concat(width + "x" + height + "*\n");
         if (height < 2)
             throw new Exception();
         StringBuilder stringBuilder = new StringBuilder();

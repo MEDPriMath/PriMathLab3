@@ -48,7 +48,7 @@ public class Main {
         matrixGenerators.add(new HilbertMatrixGenerator());
 
         SolveChecker solveChecker = new SolveChecker(matrixGenerators, linearEquationSolvers);
-        solveChecker.check(5);
+        solveChecker.check(10);
         List<MarkdownBlock> markdownBlocks2 = solveChecker.getMarkdownBlocks();
 
         List<MarkdownBlock> markdownBlocks = new ArrayList<>();

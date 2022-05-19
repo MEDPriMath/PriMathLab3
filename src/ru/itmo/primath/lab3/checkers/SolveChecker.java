@@ -4,6 +4,7 @@ import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.markdown.blocks.*;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
+import ru.itmo.primath.lab3.solvers.JacobiIterationLinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
 
 import java.util.ArrayList;
@@ -34,6 +35,10 @@ public class SolveChecker implements MatrixAlgorithmChecker {
 
                 MarkdownBlock solver = new MarkdownBold(linearEquationSolver.getClass().getSimpleName(), true);
                 markdownBlocks.add(solver);
+                if (linearEquationSolver instanceof JacobiIterationLinearEquationSolver){
+                    MarkdownBlock iterationsText = new MarkdownBold("Iterations: " + ((JacobiIterationLinearEquationSolver) linearEquationSolver).getIterationsCount());
+                    markdownBlocks.add(iterationsText);
+                }
 
                 MarkdownBlock generated = new MarkdownText("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
                 markdownBlocks.add(generated);
@@ -41,7 +46,7 @@ public class SolveChecker implements MatrixAlgorithmChecker {
 
                 MarkdownBlock genMatrix = new MarkdownTable(generatedMatrix, true);
                 markdownBlocks.add(genMatrix);
-                generatedMatrix.print(3);
+//                generatedMatrix.print(3);
 
                 Matrix<Integer> x = new ArrayMatrix<>(matrixSize, 1);
                 for (int i = 0; i < matrixSize; ++i){
@@ -56,9 +61,14 @@ public class SolveChecker implements MatrixAlgorithmChecker {
 
                 System.out.println("solution: ");
                 List<Double> solution = linearEquationSolver.solve(generatedMatrix, b);
-                System.out.println(solution);
+//                System.out.println(solution);
 
-                MarkdownBlock solutionBlock = new MarkdownBold("Solution: " + solution.toString(), true);
+                MarkdownBlock solutionBlock;
+                if (solution.size() <= 50) {
+                    solutionBlock = new MarkdownBold("Solution: " + solution.toString(), true);
+                } else {
+                    solutionBlock = new MarkdownBold("Solution is too big", true);
+                }
                 markdownBlocks.add(solutionBlock);
 
                 double sum = 0;
