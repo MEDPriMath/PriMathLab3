@@ -104,6 +104,8 @@ public class LUCheck implements MatrixAlgorithmChecker {
 
             MarkdownBlock textInvert = new MarkdownText("Invert matrix:", true);
             markdownBlocks.add(textInvert);
+            MarkdownBlock invertDescription = new MarkdownQuote(DescriptionStorage.invertMatrixDescription);
+            markdownBlocks.add(invertDescription);
 
             InvertMatrix invertMatrix = new InvertMatrix(matrix);
             invertMatrix.invert();

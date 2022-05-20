@@ -1,6 +1,7 @@
 package ru.itmo.primath.lab3.matrix;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CSRMatrix extends Matrix {
@@ -88,10 +89,10 @@ public class CSRMatrix extends Matrix {
                 if (Math.abs(elem) < 10E-6){
                     this.data.remove(i);
                     this.indices.remove(i);
-                    for (int k = col + 1; k <= getMatrixDimensionN(); ++k){
+                    for (int k = row + 1; k < indPtr.size(); ++k){
                         this.indPtr.set(k, this.indPtr.get(k) - 1);
-                        return;
                     }
+                    return;
                 }
                 this.data.set(i, elem);
                 return;
@@ -101,14 +102,8 @@ public class CSRMatrix extends Matrix {
                     return;
                 for (int k = row + 1; k < indPtr.size(); ++k)
                     indPtr.set(k, indPtr.get(k) + 1);
-                this.data.add(0d);
-                this.indices.add(0);
-                for (int k = this.data.size() - 2; k >= i; --k) {
-                    this.data.set(k + 1, this.data.get(k));
-                    this.indices.set(k + 1, this.indices.get(k));
-                }
-                this.data.set(i, elem);
-                this.indices.set(i, col);
+                this.data.add(i, elem);
+                this.indices.add(i, col);
                 return;
             }
         }
@@ -116,14 +111,8 @@ public class CSRMatrix extends Matrix {
             return;
         for (int k = row + 1; k < indPtr.size(); ++k)
             indPtr.set(k, indPtr.get(k) + 1);
-        this.data.add(0d);
-        this.indices.add(0);
-        for (int k = this.data.size() - 2; k >= elementsBefore + elementsInRow; --k) {
-            this.data.set(k + 1, this.data.get(k));
-            this.indices.set(k + 1, this.indices.get(k));
-        }
-        this.data.set(elementsBefore + elementsInRow, elem);
-        this.indices.set(elementsBefore + elementsInRow, col);
+        this.data.add(elementsBefore + elementsInRow, elem);
+        this.indices.add(elementsBefore + elementsInRow, col);
 
 
 

@@ -33,6 +33,8 @@ public class RandomCSRMatrixGenerator implements MatrixGenerator {
         }
 
         for (int i = 0; i < numberOfElements; ++i) {
+            if (i % 100000 == 0)
+                System.out.println("i: " + i);
             double elem = random.get();
             matrix.set(elem, indexGenerator.nextInt(0, n), indexGenerator.nextInt(0, n));
         }

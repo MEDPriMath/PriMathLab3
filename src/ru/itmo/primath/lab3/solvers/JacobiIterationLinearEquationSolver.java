@@ -1,5 +1,6 @@
 package ru.itmo.primath.lab3.solvers;
 
+import ru.itmo.primath.lab3.markdown.description.DescriptionStorage;
 import ru.itmo.primath.lab3.matrix.Matrix;
 
 import java.util.ArrayList;
@@ -54,6 +55,6 @@ public class JacobiIterationLinearEquationSolver implements LinearEquationSolver
 
     @Override
     public String toString() {
-        return "Работает и заебись!";
+        return DescriptionStorage.jacobiDescription;
     }
 }

@@ -59,7 +59,7 @@ public class IterationJacobiMethodChecker implements MatrixAlgorithmChecker {
             for (int i = 0; i < matrixSize; ++i) {
                 b.add(right.get(i, 0));
             }
-            for (int i = 1; i < 10; ++i) {
+            for (int i = 1; i < 50; ++i) {
                 JacobiIterationLinearEquationSolver solver = new JacobiIterationLinearEquationSolver(i);
 
                 System.out.println("solution: ");

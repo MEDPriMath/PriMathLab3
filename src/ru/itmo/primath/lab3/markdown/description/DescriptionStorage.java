@@ -85,4 +85,6 @@ public class DescriptionStorage {
             "L - нижнетреугольная матрица\n" +
             "U - верхнетреугольная матрица\n" +
             "L∙U = A";
+    public static String jacobiDescription = "Работает и заебись!";
+    public static String invertMatrixDescription = "Работает и охуенно!";
 }
