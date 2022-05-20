@@ -11,6 +11,8 @@ import ru.itmo.primath.lab3.solvers.JacobiIterationLinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LULinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -48,7 +50,7 @@ public class Main {
         List<MatrixGenerator> matrixGenerators2 = new ArrayList<>();
         matrixGenerators2.add(new RandomCSRMatrixGenerator<Integer>(3, () -> new Random().nextInt(1, 101)));
 
-        IterationJacobiMethodChecker iterationJacobiMethodChecker = new IterationJacobiMethodChecker(matrixGenerators2, 10E-4, 10000);
+        IterationJacobiMethodChecker iterationJacobiMethodChecker = new IterationJacobiMethodChecker(matrixGenerators2, 10E-4, 1000);
 
         matrixAlgorithmCheckers.add(iterationJacobiMethodChecker);
 
@@ -68,7 +70,13 @@ public class Main {
         MarkdownDocument markdownDocument = new MarkdownDocument(markdownBlocks);
         markdownDocument.toMarkdownFile("report.md");
 
-        MarkdownDocument.toHTML("report.md", "index.html");
+        MarkdownDocument.toHTML("report.md", "..\\ReportLab3\\index.html");
 
+        //commitAndPush();
+    }
+
+    private static int commitAndPush() throws Exception {
+        Process p = Runtime.getRuntime().exec("..\\ReportLab3\\pushScript.cmd");
+        return p.waitFor();
     }
 }
