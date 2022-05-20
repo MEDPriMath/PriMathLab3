@@ -18,15 +18,15 @@ public class MarkdownTable implements MarkdownBlock {
         this.allBold = allBold;
     }
 
-    public MarkdownTable(Matrix<?> matrix) {
+    public MarkdownTable(Matrix matrix) {
         this(matrix, 1, false);
     }
 
-    public MarkdownTable(Matrix<?> matrix, boolean allBold) {
+    public MarkdownTable(Matrix matrix, boolean allBold) {
         this(matrix, 1, allBold);
     }
 
-    public MarkdownTable(Matrix<?> matrix, int precision, boolean allBold){
+    public MarkdownTable(Matrix matrix, int precision, boolean allBold){
         this.allBold = allBold;
         if (matrix.getMatrixDimensionM() > 50 || matrix.getMatrixDimensionN() > 50) {
             width = matrix.getMatrixDimensionN();
@@ -38,7 +38,7 @@ public class MarkdownTable implements MarkdownBlock {
         this.table = new Object[matrix.getMatrixDimensionM()][matrix.getMatrixDimensionN()];
         for (int i = 0; i < matrix.getMatrixDimensionM(); ++i){
             for (int j = 0; j < matrix.getMatrixDimensionN(); ++j){
-                this.table[i][j] = String.format("%."+precision+"f", matrix.get(i, j).doubleValue());
+                this.table[i][j] = String.format("%."+precision+"f", matrix.get(i, j));
             }
         }
     }

@@ -3,64 +3,48 @@ package ru.itmo.primath.lab3.matrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSRMatrix<T extends Number> extends Matrix<T> {
+public class CSRMatrix extends Matrix {
 
-    private T zero;
-    private List<T> data;
-    private List<Integer> indices;
-    private List<Integer> indPtr;
+    private final List<Double> data;
+    private final List<Integer> indices;
+    private final List<Integer> indPtr;
 
-    public CSRMatrix(int dimensionM, int dimensionN, T zero, List<T> data, List<Integer> indices, List<Integer> indPtr) {
+    public CSRMatrix(int dimensionM, int dimensionN, List<Double> data, List<Integer> indices, List<Integer> indPtr) {
         super(dimensionM, dimensionN);
-        this.zero = zero;
         this.data = new ArrayList<>(data);
         this.indices = new ArrayList<>(indices);
         this.indPtr = new ArrayList<>(indPtr);
     }
 
     public CSRMatrix(int dimensionM, int dimensionN) {
-        this(dimensionM, dimensionN, (T) Double.valueOf(0));
-    }
-
-    public CSRMatrix(int dimensionM, int dimensionN, T zero) {
         super(dimensionM, dimensionN);
-        this.zero = zero;
         this.data = new ArrayList<>();
         this.indices = new ArrayList<>();
         this.indPtr = new ArrayList<>();
-        for (int i = 0; i < dimensionM + 1; ++i){
+        for (int i = 0; i < dimensionM + 1; ++i) {
             indPtr.add(1);
         }
-    }
-
-    public CSRMatrix(int dimension, T zero) {
-        this(dimension, dimension, zero);
     }
 
     public CSRMatrix(int dimension) {
         this(dimension, dimension);
     }
 
-    public CSRMatrix(int dimension, T zero, List<T> data, List<Integer> indices, List<Integer> indPtr) {
-        this(dimension, dimension, zero, data, indices, indPtr);
-        this.zero = zero;
-        this.data = new ArrayList<>(data);
-        this.indices = new ArrayList<>(indices);
-        this.indPtr = new ArrayList<>(indPtr);
+    public CSRMatrix(int dimension, List<Double> data, List<Integer> indices, List<Integer> indPtr) {
+        this(dimension, dimension, data, indices, indPtr);
     }
 
-    public CSRMatrix(Matrix<T> matrix, T zero) {
+    public CSRMatrix(Matrix matrix) {
         super(matrix.getMatrixDimensionM(), matrix.getMatrixDimensionN());
-        this.zero = zero;
-        List<T> data = new ArrayList<>();
+        List<Double> data = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
         List<Integer> indPtr = new ArrayList<>();
         indPtr.add(1);
         for (int i = 0; i < matrix.getMatrixDimensionM(); ++i) {
             int notNull = 0;
             for (int j = 0; j < matrix.getMatrixDimensionN(); ++j) {
-                T element = matrix.get(i, j);
-                if (!element.equals(zero)) {
+                double element = matrix.get(i, j);
+                if (element != 0) {
                     data.add(element);
                     indices.add(j);
                     ++notNull;
@@ -74,7 +58,7 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
     }
 
     @Override
-    public T get(int row, int col) {
+    public double get(int row, int col) {
         if (row < 0 || row >= matrixDimensionM)
             throw new ArrayIndexOutOfBoundsException();
         if (col < 0 || col >= matrixDimensionN)
@@ -86,11 +70,11 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
             if (this.indices.get(i) == col)
                 return this.data.get(i);
         }
-        return zero;
+        return 0;
     }
 
     @Override
-    public void set(T elem, int row, int col) {
+    public void set(double elem, int row, int col) {
         if (row < 0 || row >= matrixDimensionM)
             throw new ArrayIndexOutOfBoundsException();
         if (col < 0 || col >= matrixDimensionN)
@@ -104,12 +88,12 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
                 this.data.set(i, elem);
                 return;
             }
-            if (this.indices.get(i) > col){
+            if (this.indices.get(i) > col) {
                 for (int k = row + 1; k < indPtr.size(); ++k)
                     indPtr.set(k, indPtr.get(k) + 1);
-                this.data.add(zero);
+                this.data.add(0d);
                 this.indices.add(0);
-                for (int k = this.data.size() - 2; k >= i; --k){
+                for (int k = this.data.size() - 2; k >= i; --k) {
                     this.data.set(k + 1, this.data.get(k));
                     this.indices.set(k + 1, this.indices.get(k));
                 }
@@ -120,9 +104,9 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
         }
         for (int k = row + 1; k < indPtr.size(); ++k)
             indPtr.set(k, indPtr.get(k) + 1);
-        this.data.add(zero);
+        this.data.add(0d);
         this.indices.add(0);
-        for (int k = this.data.size() - 2; k >= elementsBefore + elementsInRow; --k){
+        for (int k = this.data.size() - 2; k >= elementsBefore + elementsInRow; --k) {
             this.data.set(k + 1, this.data.get(k));
             this.indices.set(k + 1, this.indices.get(k));
         }
@@ -131,16 +115,16 @@ public class CSRMatrix<T extends Number> extends Matrix<T> {
 
 
 
-        /*ArrayMatrix<T> matrix = new ArrayMatrix<>(this);
+        /*ArrayMatrix matrix = new ArrayMatrix<>(this);
         matrix.set(elem, row, col);
-        List<T> data = new ArrayList<>();
+        List<Double> data = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
         List<Integer> indPtr = new ArrayList<>();
         indPtr.add(1);
         for (int i = 0; i < matrix.getMatrixDimensionM(); ++i) {
             int notNull = 0;
             for (int j = 0; j < matrix.getMatrixDimensionN(); ++j) {
-                T element = matrix.get(i, j);
+                double element = matrix.get(i, j);
                 if (!element.equals(zero)) {
                     data.add(element);
                     indices.add(j);

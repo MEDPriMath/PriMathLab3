@@ -1,7 +1,12 @@
 package ru.itmo.primath.lab3.checkers;
 
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
-import ru.itmo.primath.lab3.markdown.blocks.*;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownBold;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownHeader;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownQuote;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownTable;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownText;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 import ru.itmo.primath.lab3.solvers.JacobiIterationLinearEquationSolver;
@@ -12,11 +17,11 @@ import java.util.List;
 
 public class SolveChecker implements MatrixAlgorithmChecker {
     private List<MatrixGenerator> matrixGenerators;
-    private List<LinearEquationSolver<Double>> linearEquationSolvers;
+    private List<LinearEquationSolver> linearEquationSolvers;
     private List<MarkdownBlock> markdownBlocks = new ArrayList<>();
     private int matrixSize;
 
-    public SolveChecker(List<MatrixGenerator> matrixGenerators, List<LinearEquationSolver<Double>> linearEquationSolvers, int matrixSize) {
+    public SolveChecker(List<MatrixGenerator> matrixGenerators, List<LinearEquationSolver> linearEquationSolvers, int matrixSize) {
         this.matrixGenerators = new ArrayList<>(matrixGenerators);
         this.linearEquationSolvers = new ArrayList<>(linearEquationSolvers);
         this.matrixSize = matrixSize;
@@ -33,11 +38,11 @@ public class SolveChecker implements MatrixAlgorithmChecker {
 
             matrixGenerators.forEach(matrixGenerator -> {
 
-                Matrix<Double> generatedMatrix = matrixGenerator.generate(matrixSize);
+                Matrix generatedMatrix = matrixGenerator.generate(matrixSize);
 
                 MarkdownBlock solver = new MarkdownBold(linearEquationSolver.getClass().getSimpleName());
                 markdownBlocks.add(solver);
-                if (linearEquationSolver instanceof JacobiIterationLinearEquationSolver){
+                if (linearEquationSolver instanceof JacobiIterationLinearEquationSolver) {
                     MarkdownBlock iterationsText = new MarkdownBold("Iterations: " + ((JacobiIterationLinearEquationSolver) linearEquationSolver).getIterationsCount());
                     markdownBlocks.add(iterationsText);
                 }
@@ -50,14 +55,14 @@ public class SolveChecker implements MatrixAlgorithmChecker {
                 markdownBlocks.add(genMatrix);
 //                generatedMatrix.print(3);
 
-                Matrix<Integer> x = new ArrayMatrix<>(matrixSize, 1);
-                for (int i = 0; i < matrixSize; ++i){
+                Matrix x = new ArrayMatrix(matrixSize, 1);
+                for (int i = 0; i < matrixSize; ++i) {
                     x.set(i + 1, i, 0);
                 }
-                Matrix<Double> right = generatedMatrix.multiply(x);
+                Matrix right = generatedMatrix.multiply(x);
 
                 List<Double> b = new ArrayList<>();
-                for (int i = 0; i < matrixSize; ++i){
+                for (int i = 0; i < matrixSize; ++i) {
                     b.add(right.get(i, 0));
                 }
 
@@ -74,7 +79,7 @@ public class SolveChecker implements MatrixAlgorithmChecker {
                 markdownBlocks.add(solutionBlock);
 
                 double sum = 0;
-                for (int i = 0; i < matrixSize; ++i){
+                for (int i = 0; i < matrixSize; ++i) {
                     sum += Math.abs((x.get(i, 0) - solution.get(i)) / x.get(i, 0));
                 }
 

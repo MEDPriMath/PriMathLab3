@@ -3,15 +3,15 @@ package ru.itmo.primath.lab3.generators;
 import ru.itmo.primath.lab3.matrix.ArrayMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
 
-public class HilbertMatrixGenerator<T extends Number> implements MatrixGenerator<T>{
+public class HilbertMatrixGenerator implements MatrixGenerator {
     @Override
-    public Matrix<T> generate(int n) {
+    public Matrix generate(int n) {
         if (n < 0)
             throw new IllegalArgumentException();
-        Matrix<T> matrix = new ArrayMatrix<T>(n);
-        for (int i = 0; i < n; ++i){
-            for (int j = 0; j < n; ++j){
-                T elem = (T) Double.valueOf(1d / (i + j + 1));
+        Matrix matrix = new ArrayMatrix(n);
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                double elem = 1d / (i + j + 1);
                 matrix.set(elem, i, j);
             }
         }

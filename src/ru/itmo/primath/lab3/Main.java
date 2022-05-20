@@ -4,15 +4,17 @@ import ru.itmo.primath.lab3.checkers.IterationJacobiMethodChecker;
 import ru.itmo.primath.lab3.checkers.LUCheck;
 import ru.itmo.primath.lab3.checkers.MatrixAlgorithmChecker;
 import ru.itmo.primath.lab3.checkers.SolveChecker;
-import ru.itmo.primath.lab3.generators.*;
+import ru.itmo.primath.lab3.generators.DiagonallyDominantMatrixGenerator;
+import ru.itmo.primath.lab3.generators.HilbertMatrixGenerator;
+import ru.itmo.primath.lab3.generators.MatrixGenerator;
+import ru.itmo.primath.lab3.generators.RandomCSRMatrixGenerator;
+import ru.itmo.primath.lab3.generators.RandomMatrixGenerator;
 import ru.itmo.primath.lab3.markdown.MarkdownDocument;
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 import ru.itmo.primath.lab3.solvers.JacobiIterationLinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LULinearEquationSolver;
 import ru.itmo.primath.lab3.solvers.LinearEquationSolver;
 
-import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,7 +24,7 @@ public class Main {
         List<MatrixAlgorithmChecker> matrixAlgorithmCheckers = new ArrayList<>();
 
         List<MatrixGenerator> matrixGenerators1 = new ArrayList<>();
-        matrixGenerators1.add(new RandomMatrixGenerator(() -> new Random().nextInt(1, 101)));
+        matrixGenerators1.add(new RandomMatrixGenerator(() -> (double) new Random().nextInt(1, 101)));
         LUCheck luCheck = new LUCheck(matrixGenerators1, 10);
 
         matrixAlgorithmCheckers.add(luCheck);
@@ -31,9 +33,9 @@ public class Main {
 //        List<MarkdownBlock> markdownBlocks1 = luCheck.getMarkdownBlocks();
 
 
-        List<LinearEquationSolver<Double>> linearEquationSolvers = new ArrayList<>();
-        linearEquationSolvers.add(new LULinearEquationSolver<Double>(0d, 1d));
-        linearEquationSolvers.add(new JacobiIterationLinearEquationSolver<>(5));
+        List<LinearEquationSolver> linearEquationSolvers = new ArrayList<>();
+        linearEquationSolvers.add(new LULinearEquationSolver(0d, 1d));
+        linearEquationSolvers.add(new JacobiIterationLinearEquationSolver(5));
 
         List<MatrixGenerator> matrixGenerators = new ArrayList<>();
         for (int k = 1; k < 5; ++k)
@@ -48,7 +50,7 @@ public class Main {
 //        List<MarkdownBlock> markdownBlocks2 = solveChecker.getMarkdownBlocks();
 
         List<MatrixGenerator> matrixGenerators2 = new ArrayList<>();
-        matrixGenerators2.add(new RandomCSRMatrixGenerator<Integer>(3, () -> new Random().nextInt(1, 101)));
+        matrixGenerators2.add(new RandomCSRMatrixGenerator(3, () -> (double) new Random().nextInt(1, 101)));
 
         IterationJacobiMethodChecker iterationJacobiMethodChecker = new IterationJacobiMethodChecker(matrixGenerators2, 10E-4, 1000);
 

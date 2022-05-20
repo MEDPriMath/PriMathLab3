@@ -3,7 +3,12 @@ package ru.itmo.primath.lab3.checkers;
 import ru.itmo.primath.lab3.generators.MatrixGenerator;
 import ru.itmo.primath.lab3.invertible.InvertMatrix;
 import ru.itmo.primath.lab3.lu.LUDecomposition;
-import ru.itmo.primath.lab3.markdown.blocks.*;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownBold;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownHeader;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownQuote;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownTable;
+import ru.itmo.primath.lab3.markdown.blocks.MarkdownText;
 import ru.itmo.primath.lab3.markdown.description.DescriptionStorage;
 import ru.itmo.primath.lab3.matrix.CSRMatrix;
 import ru.itmo.primath.lab3.matrix.Matrix;
@@ -29,7 +34,7 @@ public class LUCheck implements MatrixAlgorithmChecker {
             markdownBlocks.add(new MarkdownHeader("Check LU decomposition", 1, true));
             markdownBlocks.add(new MarkdownQuote(DescriptionStorage.luDescription));
 
-            Matrix<Double> matrix = matrixGenerator.generate(matrixSize);
+            Matrix matrix = matrixGenerator.generate(matrixSize);
             MarkdownBlock textBlock = new MarkdownText("Matrix:", true);
             markdownBlocks.add(textBlock);
             System.out.println("Matrix: ");
@@ -38,12 +43,12 @@ public class LUCheck implements MatrixAlgorithmChecker {
             markdownBlocks.add(matrixBlock);
 //            matrix.print();
 
-            CSRMatrix<Double> csrMatrix = new CSRMatrix<>(matrix, 0d);
+            CSRMatrix csrMatrix = new CSRMatrix(matrix);
 
-            LUDecomposition<Double> luDecomposition = new LUDecomposition<>(csrMatrix, 0d, 1d);
+            LUDecomposition luDecomposition = new LUDecomposition(csrMatrix);
             luDecomposition.decompose();
-            Matrix<Double> l = luDecomposition.getlMatrix();
-            Matrix<Double> u = luDecomposition.getuMatrix();
+            Matrix l = luDecomposition.L();
+            Matrix u = luDecomposition.U();
 
             MarkdownBlock textLBlock = new MarkdownText("L matrix:", true);
             markdownBlocks.add(textLBlock);
@@ -80,7 +85,7 @@ public class LUCheck implements MatrixAlgorithmChecker {
             MarkdownBlock checkTest = new MarkdownText("L∙U =", true);
             markdownBlocks.add(checkTest);
 
-            Matrix<Double> checkLU = l.multiply(u);
+            Matrix checkLU = l.multiply(u);
 
             MarkdownBlock checkLUTable = new MarkdownTable(checkLU, true);
             markdownBlocks.add(checkLUTable);
@@ -100,16 +105,16 @@ public class LUCheck implements MatrixAlgorithmChecker {
             MarkdownBlock textInvert = new MarkdownText("Invert matrix:", true);
             markdownBlocks.add(textInvert);
 
-            InvertMatrix<Double> invertMatrix = new InvertMatrix<>(matrix, 0d, 1d);
+            InvertMatrix invertMatrix = new InvertMatrix(matrix);
             invertMatrix.invert();
-            Matrix<Double> invert = invertMatrix.getInvertibleMatrix();
+            Matrix invert = invertMatrix.getInvertibleMatrix();
             MarkdownBlock invertTable = new MarkdownTable(invert,5, true);
             markdownBlocks.add(invertTable);
 
             MarkdownBlock textInvertCheck = new MarkdownText("A∙A<sup>-1</sup>:", true);
             markdownBlocks.add(textInvertCheck);
 
-            Matrix<Double> checkInvert = matrix.multiply(invert);
+            Matrix checkInvert = matrix.multiply(invert);
             MarkdownBlock checkInvertTable = new MarkdownTable(checkInvert, true);
             markdownBlocks.add(checkInvertTable);
 

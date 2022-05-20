@@ -6,19 +6,19 @@ import ru.itmo.primath.lab3.matrix.Matrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LULinearEquationSolver<T extends Number> implements LinearEquationSolver<T> {
-    private Matrix<T> matrix;
-    List<T> b = new ArrayList<>();
-    private T zero;
-    private T identityElement;
+public class LULinearEquationSolver implements LinearEquationSolver {
+    private Matrix matrix;
+    List<Double> b = new ArrayList<>();
+    private double zero = 0;
+    private double identityElement = 1;
 
-    public LULinearEquationSolver(T zero, T identityElement) {
+    public LULinearEquationSolver(double zero, double identityElement) {
         this.zero = zero;
         this.identityElement = identityElement;
     }
 
     @Override
-    public List<Double> solve(Matrix<T> matrix, List<Double> b){
+    public List<Double> solve(Matrix matrix, List<Double> b){
         if (!matrix.isSquare())
             throw new IllegalArgumentException();
         if (matrix.getMatrixDimensionM() != b.size())
@@ -26,12 +26,12 @@ public class LULinearEquationSolver<T extends Number> implements LinearEquationS
 
         int n = matrix.getMatrixDimensionN();
 
-        LUDecomposition<T> luDecomposition = new LUDecomposition<>(matrix, zero, identityElement);
+        LUDecomposition luDecomposition = new LUDecomposition(matrix);
 
         luDecomposition.decompose();
 
-        Matrix<Double> l = luDecomposition.getlMatrix();
-        Matrix<Double> u = luDecomposition.getuMatrix();
+        Matrix l = luDecomposition.L();
+        Matrix u = luDecomposition.U();
 
         List<Double> result = new ArrayList<>(n);
         List<Double> y = new ArrayList<>(n);

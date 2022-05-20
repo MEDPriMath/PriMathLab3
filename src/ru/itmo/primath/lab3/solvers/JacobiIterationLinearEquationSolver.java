@@ -5,9 +5,9 @@ import ru.itmo.primath.lab3.matrix.Matrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JacobiIterationLinearEquationSolver<T extends Number> implements LinearEquationSolver<T>{
+public class JacobiIterationLinearEquationSolver implements LinearEquationSolver {
 
-    List<T> b = new ArrayList<>();
+    List<Double> b = new ArrayList<>();
     private int iterationsCount;
 
     public JacobiIterationLinearEquationSolver(int iterationsCount) {
@@ -21,7 +21,7 @@ public class JacobiIterationLinearEquationSolver<T extends Number> implements Li
     }
 
     @Override
-    public List<Double> solve(Matrix<T> matrix, List<Double> b) {
+    public List<Double> solve(Matrix matrix, List<Double> b) {
         if (!matrix.isSquare())
             throw new IllegalArgumentException();
         if (matrix.getMatrixDimensionM() != b.size())
@@ -31,20 +31,20 @@ public class JacobiIterationLinearEquationSolver<T extends Number> implements Li
 
         List<Double> result = new ArrayList<>(n);
 
-        for (int i = 0; i < n; ++i){
-            result.add(b.get(i) / matrix.get(i, i).doubleValue());
+        for (int i = 0; i < n; ++i) {
+            result.add(b.get(i) / matrix.get(i, i));
         }
 
-        for (int k = 1; k < iterationsCount; ++k){
+        for (int k = 1; k < iterationsCount; ++k) {
             List<Double> x = new ArrayList<>(n);
-            for (int i = 0; i < n; ++i){
+            for (int i = 0; i < n; ++i) {
                 double sum = 0;
-                for (int j = 0; j < n; ++j){
+                for (int j = 0; j < n; ++j) {
                     if (i == j)
                         continue;
-                    sum += matrix.get(i, j).doubleValue() * result.get(j);
+                    sum += matrix.get(i, j) * result.get(j);
                 }
-                x.add((b.get(i) - sum) / matrix.get(i, i).doubleValue());
+                x.add((b.get(i) - sum) / matrix.get(i, i));
             }
             result = x;
         }

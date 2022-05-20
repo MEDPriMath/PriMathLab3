@@ -1,9 +1,8 @@
 package ru.itmo.primath.lab3.matrix;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
-public abstract class Matrix<T extends Number> {
+public abstract class Matrix {
 
     protected int matrixDimensionM;
     protected int matrixDimensionN;
@@ -19,8 +18,9 @@ public abstract class Matrix<T extends Number> {
         this(matrixDimension, matrixDimension);
     }
 
-    public abstract T get(int row, int col);
-    public abstract void set(T elem, int row, int col);
+    public abstract double get(int row, int col);
+
+    public abstract void set(double elem, int row, int col);
 
     public int getMatrixDimensionM() {
         return matrixDimensionM;
@@ -30,45 +30,45 @@ public abstract class Matrix<T extends Number> {
         return matrixDimensionN;
     }
 
-    public Matrix<Double> sum(Matrix<? extends Number> otherMatrix){
+    public Matrix sum(Matrix otherMatrix) {
         if (this.getMatrixDimensionM() != otherMatrix.getMatrixDimensionM() || this.getMatrixDimensionN() != otherMatrix.getMatrixDimensionN())
             throw new IllegalArgumentException();
 
-        Matrix<Double> resultMatrix = new ArrayMatrix<>(this.matrixDimensionM, this.matrixDimensionN);
-        for (int i = 0; i < matrixDimensionM; ++i){
-            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
-                resultMatrix.set(this.get(i, j).doubleValue() + otherMatrix.get(i, j).doubleValue(), i, j);
+        Matrix resultMatrix = new ArrayMatrix(this.matrixDimensionM, this.matrixDimensionN);
+        for (int i = 0; i < matrixDimensionM; ++i) {
+            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j) {
+                resultMatrix.set(this.get(i, j) + otherMatrix.get(i, j), i, j);
             }
         }
 
         return resultMatrix;
     }
 
-    public Matrix<Double> sum(Matrix<? extends Number> otherMatrix, Class type) throws Exception {
+    public Matrix sum(Matrix otherMatrix, Class<?> type) throws Exception {
         if (this.getMatrixDimensionM() != otherMatrix.getMatrixDimensionM() || this.getMatrixDimensionN() != otherMatrix.getMatrixDimensionN())
             throw new IllegalArgumentException();
 
-        Constructor constructor = type.getConstructor(int.class, int.class);
-        Matrix<Double> resultMatrix = (Matrix<Double>) constructor.newInstance(this.matrixDimensionM, otherMatrix.matrixDimensionN);
+        Constructor<?> constructor = type.getConstructor(int.class, int.class);
+        Matrix resultMatrix = (Matrix) constructor.newInstance(this.matrixDimensionM, otherMatrix.matrixDimensionN);
 
-        for (int i = 0; i < matrixDimensionM; ++i){
-            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
-                resultMatrix.set(this.get(i, j).doubleValue() + otherMatrix.get(i, j).doubleValue(), i, j);
+        for (int i = 0; i < matrixDimensionM; ++i) {
+            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j) {
+                resultMatrix.set(this.get(i, j) + otherMatrix.get(i, j), i, j);
             }
         }
 
         return resultMatrix;
     }
 
-    public Matrix<Double> multiply(Matrix<? extends Number> otherMatrix){
+    public Matrix multiply(Matrix otherMatrix) {
         if (this.matrixDimensionN != otherMatrix.matrixDimensionM)
             throw new IllegalArgumentException();
-        Matrix<Double> resultMatrix = new ArrayMatrix<>(this.matrixDimensionM, otherMatrix.matrixDimensionN);
-        for (int i = 0; i < matrixDimensionM; ++i){
-            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
+        Matrix resultMatrix = new ArrayMatrix(this.matrixDimensionM, otherMatrix.matrixDimensionN);
+        for (int i = 0; i < matrixDimensionM; ++i) {
+            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j) {
                 Double elem = 0d;
-                for (int k = 0; k < matrixDimensionN; ++k){
-                    elem += this.get(i, k).doubleValue() * otherMatrix.get(k, j).doubleValue();
+                for (int k = 0; k < matrixDimensionN; ++k) {
+                    elem += this.get(i, k) * otherMatrix.get(k, j);
                 }
                 resultMatrix.set(elem, i, j);
             }
@@ -77,18 +77,18 @@ public abstract class Matrix<T extends Number> {
         return resultMatrix;
     }
 
-    public Matrix<Double> multiply(Matrix<? extends Number> otherMatrix, Class type) throws Exception {
+    public Matrix multiply(Matrix otherMatrix, Class type) throws Exception {
         if (this.matrixDimensionN != otherMatrix.matrixDimensionM)
             throw new IllegalArgumentException();
 
         Constructor constructor = type.getConstructor(int.class, int.class);
 
-        Matrix<Double> resultMatrix = (Matrix<Double>) constructor.newInstance(this.matrixDimensionM, otherMatrix.matrixDimensionN);
-        for (int i = 0; i < matrixDimensionM; ++i){
-            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j){
+        Matrix resultMatrix = (Matrix) constructor.newInstance(this.matrixDimensionM, otherMatrix.matrixDimensionN);
+        for (int i = 0; i < matrixDimensionM; ++i) {
+            for (int j = 0; j < otherMatrix.matrixDimensionN; ++j) {
                 Double elem = 0d;
-                for (int k = 0; k < matrixDimensionN; ++k){
-                    elem += this.get(i, k).doubleValue() * otherMatrix.get(k, j).doubleValue();
+                for (int k = 0; k < matrixDimensionN; ++k) {
+                    elem += this.get(i, k) * otherMatrix.get(k, j);
                 }
                 resultMatrix.set(elem, i, j);
             }
@@ -97,16 +97,17 @@ public abstract class Matrix<T extends Number> {
         return resultMatrix;
     }
 
-    public boolean isSquare(){
+    public boolean isSquare() {
         return matrixDimensionM == matrixDimensionN;
     }
-    public boolean isLowerTriangular(){
+
+    public boolean isLowerTriangular() {
         if (!this.isSquare())
             return false;
 
-        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
-            for (int j = i + 1; j < this.getMatrixDimensionN(); ++j){
-                if (Math.abs(this.get(i, j).doubleValue() - 0) > 10E-6)
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i) {
+            for (int j = i + 1; j < this.getMatrixDimensionN(); ++j) {
+                if (Math.abs(this.get(i, j) - 0) > 10E-6)
                     return false;
             }
         }
@@ -114,13 +115,13 @@ public abstract class Matrix<T extends Number> {
         return true;
     }
 
-    public boolean isUpperTriangular(){
+    public boolean isUpperTriangular() {
         if (!this.isSquare())
             return false;
 
-        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < i; ++j){
-                if (Math.abs(this.get(i, j).doubleValue() - 0) > 10E-6)
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (Math.abs(this.get(i, j) - 0) > 10E-6)
                     return false;
             }
         }
@@ -132,39 +133,40 @@ public abstract class Matrix<T extends Number> {
         print(1);
     }
 
-    public void print(int precision){
+    public void print(int precision) {
         int largest = 0;
-        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < this.getMatrixDimensionN(); ++j){
-                if (String.format("%."+precision+"f", this.get(i, j).doubleValue()).length() > largest)
-                    largest = String.format("%."+precision+"f", this.get(i, j).doubleValue()).length();
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i) {
+            for (int j = 0; j < this.getMatrixDimensionN(); ++j) {
+                if (String.format("%." + precision + "f", this.get(i, j)).length() > largest)
+                    largest = String.format("%." + precision + "f", this.get(i, j)).length();
             }
         }
-        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < this.getMatrixDimensionN(); ++j){
-                System.out.print(String.format("%"+largest+"."+precision+"f", this.get(i, j).doubleValue()) + " ");
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i) {
+            for (int j = 0; j < this.getMatrixDimensionN(); ++j) {
+                System.out.print(String.format("%" + largest + "." + precision + "f", this.get(i, j)) + " ");
             }
             System.out.println();
         }
     }
 
-    public static<T extends Number> Matrix<T> generateIdentityMatrix(int n){
+    public static Matrix generateIdentityMatrix(int n) {
         if (n <= 0)
             throw new IllegalArgumentException();
 
-        Matrix<T> matrix = new CSRMatrix<>(n, (T)Double.valueOf(0));
+        Matrix matrix = new CSRMatrix(n);
 
-        for (int i = 0; i < n; ++i){
-            matrix.set((T)Double.valueOf(1), i, i);
+        for (int i = 0; i < n; ++i) {
+            matrix.set(1, i, i);
         }
 
         return matrix;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!(obj instanceof Matrix)){
+        if (!(obj instanceof Matrix)) {
             return false;
         }
 
@@ -173,9 +175,9 @@ public abstract class Matrix<T extends Number> {
         if (this.getMatrixDimensionM() != otherMatrix.getMatrixDimensionM() || this.getMatrixDimensionN() != otherMatrix.getMatrixDimensionN())
             return false;
 
-        for (int i = 0; i < this.getMatrixDimensionM(); ++i){
-            for (int j = 0; j < this.getMatrixDimensionN(); ++j){
-                if (Math.abs(this.get(i, j).doubleValue() - otherMatrix.get(i, j).doubleValue()) > 10E-6)
+        for (int i = 0; i < this.getMatrixDimensionM(); ++i) {
+            for (int j = 0; j < this.getMatrixDimensionN(); ++j) {
+                if (Math.abs(this.get(i, j) - otherMatrix.get(i, j)) > 10E-6)
                     return false;
             }
         }

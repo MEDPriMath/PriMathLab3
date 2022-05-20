@@ -4,6 +4,6 @@ import ru.itmo.primath.lab3.matrix.Matrix;
 
 import java.util.List;
 
-public interface LinearEquationSolver<T extends Number> {
-    List<Double> solve(Matrix<T> matrix, List<Double> b);
+public interface LinearEquationSolver {
+    List<Double> solve(Matrix matrix, List<Double> b);
 }

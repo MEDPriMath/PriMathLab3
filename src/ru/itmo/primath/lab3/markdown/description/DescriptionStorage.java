@@ -19,7 +19,7 @@ public class DescriptionStorage {
             "        <div id=\"layout\">\n" +
             "            <div id=\"test-editormd-view2\">\n" +
             "                <textarea id=\"append-test\" style=\"display:none;\">";
-    public static String htmlPast = "                </textarea>\n" +
+    public static String htmlPost = "                </textarea>\n" +
             "            </div>\n" +
             "        </div>\n" +
             "        <!-- <script src=\"js/zepto.min.js\"></script>\n" +

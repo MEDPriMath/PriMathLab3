@@ -3,7 +3,6 @@ package ru.itmo.primath.lab3.markdown;
 import ru.itmo.primath.lab3.markdown.blocks.MarkdownBlock;
 import ru.itmo.primath.lab3.markdown.description.DescriptionStorage;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,14 +13,15 @@ import java.util.List;
 public class MarkdownDocument {
     private List<MarkdownBlock> markdownBlocks;
 
-    public MarkdownDocument(){
+    public MarkdownDocument() {
         this.markdownBlocks = new ArrayList<>();
     }
+
     public MarkdownDocument(List<MarkdownBlock> markdownBlocks) {
         this.markdownBlocks = new ArrayList<>(markdownBlocks);
     }
 
-    public void AddBlock(MarkdownBlock markdownBlock){
+    public void AddBlock(MarkdownBlock markdownBlock) {
         markdownBlocks.add(markdownBlock);
     }
 
@@ -40,7 +40,7 @@ public class MarkdownDocument {
         fileWriter.close();
     }
 
-    public String toMarkdownString(){
+    public String toMarkdownString() {
         StringBuilder stringBuilder = new StringBuilder();
         markdownBlocks.forEach(markdownBlock -> {
             try {
@@ -56,7 +56,7 @@ public class MarkdownDocument {
         String markdown = Files.readString(Path.of(markdownFilename));
 
         FileWriter fileWriter = new FileWriter(htmlFilename);
-        fileWriter.write(DescriptionStorage.htmlPre + "\n" + markdown + "\n" + DescriptionStorage.htmlPast);
+        fileWriter.write(DescriptionStorage.htmlPre + "\n" + markdown + "\n" + DescriptionStorage.htmlPost);
         fileWriter.close();
     }
 
