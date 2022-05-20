@@ -85,10 +85,20 @@ public class CSRMatrix extends Matrix {
 
         for (int i = elementsBefore; i < elementsBefore + elementsInRow; ++i) {
             if (this.indices.get(i) == col) {
+                if (Math.abs(elem) < 10E-6){
+                    this.data.remove(i);
+                    this.indices.remove(i);
+                    for (int k = col + 1; k <= getMatrixDimensionN(); ++k){
+                        this.indPtr.set(k, this.indPtr.get(k) - 1);
+                        return;
+                    }
+                }
                 this.data.set(i, elem);
                 return;
             }
             if (this.indices.get(i) > col) {
+                if (Math.abs(elem) < 10E-6)
+                    return;
                 for (int k = row + 1; k < indPtr.size(); ++k)
                     indPtr.set(k, indPtr.get(k) + 1);
                 this.data.add(0d);
@@ -102,6 +112,8 @@ public class CSRMatrix extends Matrix {
                 return;
             }
         }
+        if (Math.abs(elem) < 10E-6)
+            return;
         for (int k = row + 1; k < indPtr.size(); ++k)
             indPtr.set(k, indPtr.get(k) + 1);
         this.data.add(0d);
