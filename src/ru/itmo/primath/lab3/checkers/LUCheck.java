@@ -30,7 +30,7 @@ public class LUCheck implements MatrixAlgorithmChecker {
             markdownBlocks.add(new MarkdownQuote(DescriptionStorage.luDescription));
 
             Matrix<Double> matrix = matrixGenerator.generate(matrixSize);
-            MarkdownBlock textBlock = new MarkdownText("Matrix:");
+            MarkdownBlock textBlock = new MarkdownText("Matrix:", true);
             markdownBlocks.add(textBlock);
             System.out.println("Matrix: ");
 
@@ -45,7 +45,7 @@ public class LUCheck implements MatrixAlgorithmChecker {
             Matrix<Double> l = luDecomposition.getlMatrix();
             Matrix<Double> u = luDecomposition.getuMatrix();
 
-            MarkdownBlock textLBlock = new MarkdownText("L matrix:");
+            MarkdownBlock textLBlock = new MarkdownText("L matrix:", true);
             markdownBlocks.add(textLBlock);
             System.out.println("L matrix:");
 
@@ -61,7 +61,7 @@ public class LUCheck implements MatrixAlgorithmChecker {
             }
             markdownBlocks.add(checkLText);
 
-            MarkdownBlock textUBlock = new MarkdownText("U matrix:");
+            MarkdownBlock textUBlock = new MarkdownText("U matrix:", true);
             markdownBlocks.add(textUBlock);
             System.out.println("U matrix:");
 
@@ -77,7 +77,7 @@ public class LUCheck implements MatrixAlgorithmChecker {
             }
             markdownBlocks.add(checkUText);
 
-            MarkdownBlock checkTest = new MarkdownText("L∙U =");
+            MarkdownBlock checkTest = new MarkdownText("L∙U =", true);
             markdownBlocks.add(checkTest);
 
             Matrix<Double> checkLU = l.multiply(u);
@@ -97,7 +97,7 @@ public class LUCheck implements MatrixAlgorithmChecker {
 
             markdownBlocks.add(new MarkdownHeader("Check invert Matrix algorithm", 1, true));
 
-            MarkdownBlock textInvert = new MarkdownText("Invert matrix:");
+            MarkdownBlock textInvert = new MarkdownText("Invert matrix:", true);
             markdownBlocks.add(textInvert);
 
             InvertMatrix<Double> invertMatrix = new InvertMatrix<>(matrix, 0d, 1d);
@@ -106,7 +106,7 @@ public class LUCheck implements MatrixAlgorithmChecker {
             MarkdownBlock invertTable = new MarkdownTable(invert,5, true);
             markdownBlocks.add(invertTable);
 
-            MarkdownBlock textInvertCheck = new MarkdownText("A∙A<sup>-1</sup>:");
+            MarkdownBlock textInvertCheck = new MarkdownText("A∙A<sup>-1</sup>:", true);
             markdownBlocks.add(textInvertCheck);
 
             Matrix<Double> checkInvert = matrix.multiply(invert);

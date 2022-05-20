@@ -35,14 +35,14 @@ public class SolveChecker implements MatrixAlgorithmChecker {
 
                 Matrix<Double> generatedMatrix = matrixGenerator.generate(matrixSize);
 
-                MarkdownBlock solver = new MarkdownBold(linearEquationSolver.getClass().getSimpleName(), true);
+                MarkdownBlock solver = new MarkdownBold(linearEquationSolver.getClass().getSimpleName());
                 markdownBlocks.add(solver);
                 if (linearEquationSolver instanceof JacobiIterationLinearEquationSolver){
                     MarkdownBlock iterationsText = new MarkdownBold("Iterations: " + ((JacobiIterationLinearEquationSolver) linearEquationSolver).getIterationsCount());
                     markdownBlocks.add(iterationsText);
                 }
 
-                MarkdownBlock generated = new MarkdownText("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
+                MarkdownBlock generated = new MarkdownText("generated with " + matrixGenerator.getClass().getSimpleName() + ":", true);
                 markdownBlocks.add(generated);
                 System.out.println("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
 

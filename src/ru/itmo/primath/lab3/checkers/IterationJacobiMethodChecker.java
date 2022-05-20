@@ -76,7 +76,7 @@ public class IterationJacobiMethodChecker implements MatrixAlgorithmChecker{
 
                 sum /= matrixSize;
 
-                MarkdownBlock iterationsText = new MarkdownText("Interations: " + solver.getIterationsCount());
+                MarkdownBlock iterationsText = new MarkdownText("Iterations: " + solver.getIterationsCount());
                 markdownBlocks.add(iterationsText);
                 MarkdownBlock error = new MarkdownText(String.format("Avg error = %.2f%%\n", sum * 100d));
                 markdownBlocks.add(error);

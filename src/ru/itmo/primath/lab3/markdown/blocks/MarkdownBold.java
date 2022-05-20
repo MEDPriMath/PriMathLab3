@@ -23,7 +23,7 @@ public class MarkdownBold implements MarkdownBlock{
                 .replace("  ", "**  **");
 
         if (newLine)
-            return "**".concat(s).concat("**  ");
+            return "**".concat(s).concat("**\n");
         else
             return "**".concat(s).concat("**");
     }
