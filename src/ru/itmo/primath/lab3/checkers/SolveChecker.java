@@ -14,14 +14,16 @@ public class SolveChecker implements MatrixAlgorithmChecker {
     private List<MatrixGenerator> matrixGenerators;
     private List<LinearEquationSolver<Double>> linearEquationSolvers;
     private List<MarkdownBlock> markdownBlocks = new ArrayList<>();
+    private int matrixSize;
 
-    public SolveChecker(List<MatrixGenerator> matrixGenerators, List<LinearEquationSolver<Double>> linearEquationSolvers) {
+    public SolveChecker(List<MatrixGenerator> matrixGenerators, List<LinearEquationSolver<Double>> linearEquationSolvers, int matrixSize) {
         this.matrixGenerators = new ArrayList<>(matrixGenerators);
         this.linearEquationSolvers = new ArrayList<>(linearEquationSolvers);
+        this.matrixSize = matrixSize;
     }
 
     @Override
-    public void check(int matrixSize) {
+    public void check() {
 
         markdownBlocks.add(new MarkdownHeader("Check solution for different matrix and solvers", 1, true));
 
@@ -61,7 +63,7 @@ public class SolveChecker implements MatrixAlgorithmChecker {
 
                 System.out.println("solution: ");
                 List<Double> solution = linearEquationSolver.solve(generatedMatrix, b);
-                System.out.println(solution.get(0));
+//                System.out.println(solution.toString());
 
                 MarkdownBlock solutionBlock;
                 if (solution.size() <= 50) {

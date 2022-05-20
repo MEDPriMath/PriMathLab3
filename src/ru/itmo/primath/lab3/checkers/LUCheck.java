@@ -13,14 +13,16 @@ import java.util.List;
 
 public class LUCheck implements MatrixAlgorithmChecker {
     private List<MatrixGenerator> matrixGenerators;
+    private int matrixSize;
 
-    public LUCheck(List<MatrixGenerator> matrixGenerators) {
+    public LUCheck(List<MatrixGenerator> matrixGenerators, int matrixSize) {
         this.matrixGenerators = matrixGenerators;
+        this.matrixSize = matrixSize;
     }
     private List<MarkdownBlock> markdownBlocks = new ArrayList<>();
 
     @Override
-    public void check(int matrixSize){
+    public void check(){
 
         matrixGenerators.forEach(matrixGenerator -> {
 
