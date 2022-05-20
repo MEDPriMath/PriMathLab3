@@ -27,13 +27,10 @@ public class RandomCSRMatrixGenerator implements MatrixGenerator {
             throw new IllegalArgumentException();
 
         int numberOfElements = k * n;
-        Matrix matrix = new CSRMatrix(n);
-        for (int i = 0; i < n; ++i) {
-            matrix.set(n, i, i);
-        }
+        Matrix matrix = Matrix.generateIdentityMatrix(n, n);
 
         for (int i = 0; i < numberOfElements; ++i) {
-            if (i % 100000 == 0)
+            if (i % 10000 == 0)
                 System.out.println("i: " + i);
             double elem = random.get();
             matrix.set(elem, indexGenerator.nextInt(0, n), indexGenerator.nextInt(0, n));

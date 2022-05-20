@@ -1,6 +1,8 @@
 package ru.itmo.primath.lab3.matrix;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Matrix {
 
@@ -150,10 +152,26 @@ public abstract class Matrix {
     }
 
     public static Matrix generateIdentityMatrix(int n) {
+        return generateIdentityMatrix(n, 1d);
+    }
+
+    public static Matrix generateIdentityMatrix(int n, double elem) {
         if (n <= 0)
             throw new IllegalArgumentException();
 
-        Matrix matrix = new CSRMatrix(n);
+        List<Double> data = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            data.add(elem);
+        }
+        List<Integer> indices = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            indices.add(i);
+        }
+        List<Integer> indPtr = new ArrayList<>(n + 1);
+        for (int i = 0; i < n + 1; i++) {
+            indPtr.add(i);
+        }
+        Matrix matrix = new CSRMatrix(n, n, data, indices, indPtr);
 
         for (int i = 0; i < n; ++i) {
             matrix.set(1, i, i);
