@@ -119,5 +119,21 @@ public class DescriptionStorage {
             "Скорость сходимости геометрической прогрессии\n" +
             "    \n" +
             "    Условие выхода: $$||x^{k+1} - x^k|| < \\epsilon$$";
-    public static String invertMatrixDescription = "";
+    public static String invertMatrixDescription = "Нахождение обратной матрицы с помощью LU разложения\n" +
+            "\n" +
+            "Ход решения:\n" +
+            "\n" +
+            "Имеем матрицу A = LU\n" +
+            "\n" +
+            "Обратная матрица X находится, как AX = E\n" +
+            "\n" +
+            "Получаем LUX = E\n" +
+            "\n" +
+            "Представим UX, как Y\n" +
+            "\n" +
+            "LY = E\n" +
+            "\n" +
+            "UX = Y\n" +
+            "\n" +
+            "Обратная матрица составляется из векторов решений Xi";
 }
