@@ -57,9 +57,9 @@ public class Main {
         matrixAlgorithmCheckers.add(solveChecker);
 
         List<MatrixGenerator> matrixGenerators2 = new ArrayList<>();
-        matrixGenerators2.add(new RandomCSRMatrixGenerator(3, () -> (double) new Random().nextInt(1, 101)));
+        matrixGenerators2.add(new RandomCSRMatrixGenerator(3, () -> (double) new Random().nextInt(1, 11)));
 
-        IterationJacobiMethodChecker iterationJacobiMethodChecker = new IterationJacobiMethodChecker(matrixGenerators2, 10E-4, 100000);
+        IterationJacobiMethodChecker iterationJacobiMethodChecker = new IterationJacobiMethodChecker(matrixGenerators2, 1E-4, 10000);
 
         matrixAlgorithmCheckers.add(iterationJacobiMethodChecker);
 

@@ -109,7 +109,7 @@ public abstract class Matrix {
 
         for (int i = 0; i < this.getMatrixDimensionM(); ++i) {
             for (int j = i + 1; j < this.getMatrixDimensionN(); ++j) {
-                if (Math.abs(this.get(i, j) - 0) > 10E-6)
+                if (Math.abs(this.get(i, j) - 0) > 1E-6)
                     return false;
             }
         }
@@ -123,7 +123,7 @@ public abstract class Matrix {
 
         for (int i = 0; i < this.getMatrixDimensionM(); ++i) {
             for (int j = 0; j < i; ++j) {
-                if (Math.abs(this.get(i, j) - 0) > 10E-6)
+                if (Math.abs(this.get(i, j) - 0) > 1E-6)
                     return false;
             }
         }
@@ -173,10 +173,6 @@ public abstract class Matrix {
         }
         Matrix matrix = new CSRMatrix(n, n, data, indices, indPtr);
 
-        for (int i = 0; i < n; ++i) {
-            matrix.set(1, i, i);
-        }
-
         return matrix;
     }
 
@@ -195,7 +191,7 @@ public abstract class Matrix {
 
         for (int i = 0; i < this.getMatrixDimensionM(); ++i) {
             for (int j = 0; j < this.getMatrixDimensionN(); ++j) {
-                if (Math.abs(this.get(i, j) - otherMatrix.get(i, j)) > 10E-6)
+                if (Math.abs(this.get(i, j) - otherMatrix.get(i, j)) > 1E-6)
                     return false;
             }
         }

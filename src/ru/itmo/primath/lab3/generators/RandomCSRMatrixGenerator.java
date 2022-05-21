@@ -8,11 +8,11 @@ import java.util.function.Supplier;
 
 public class RandomCSRMatrixGenerator implements MatrixGenerator {
 
-    private int k;
+    private double k;
     private Supplier<Double> random;
     private Random indexGenerator;
 
-    public RandomCSRMatrixGenerator(int k, Supplier<Double> random) {
+    public RandomCSRMatrixGenerator(double k, Supplier<Double> random) {
         if (k <= 0)
             throw new IllegalArgumentException();
         this.k = k;
@@ -26,8 +26,8 @@ public class RandomCSRMatrixGenerator implements MatrixGenerator {
         if (n <= 0)
             throw new IllegalArgumentException();
 
-        int numberOfElements = k * n;
-        Matrix matrix = Matrix.generateIdentityMatrix(n, n);
+        int numberOfElements = (int) (k * n);
+        Matrix matrix = Matrix.generateIdentityMatrix(n, 2 * n);
 
         for (int i = 0; i < numberOfElements; ++i) {
             if (i % 10000 == 0)

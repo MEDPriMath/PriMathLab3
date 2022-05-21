@@ -36,7 +36,7 @@ public class IterationJacobiMethodChecker implements MatrixAlgorithmChecker {
             Matrix generatedMatrix = matrixGenerator.generate(matrixSize);
 
 
-            MarkdownBlock generated = new MarkdownText("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
+            MarkdownBlock generated = new MarkdownText("generated with " + matrixGenerator.getClass().getSimpleName() + ":", true);
             markdownBlocks.add(generated);
             System.out.println("generated with " + matrixGenerator.getClass().getSimpleName() + ":");
 
@@ -86,8 +86,10 @@ public class IterationJacobiMethodChecker implements MatrixAlgorithmChecker {
                 markdownBlocks.add(error);
                 System.out.printf("Avg error = %.20f%%\n", sum * 100d);
 
-                if (sum * 100d < precision)
+                if (sum * 100d < precision) {
+                    System.out.println(precision);
                     return;
+                }
             }
         });
 
