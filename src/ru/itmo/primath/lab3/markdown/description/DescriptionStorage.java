@@ -119,5 +119,5 @@ public class DescriptionStorage {
             "Скорость сходимости геометрической прогрессии\n" +
             "    \n" +
             "    Условие выхода: $$||x^{k+1} - x^k|| < \\epsilon$$";
-    public static String invertMatrixDescription = "Работает и охуенно!";
+    public static String invertMatrixDescription = "";
 }

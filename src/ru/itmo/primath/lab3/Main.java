@@ -59,9 +59,11 @@ public class Main {
         List<MatrixGenerator> matrixGenerators2 = new ArrayList<>();
         matrixGenerators2.add(new RandomCSRMatrixGenerator(3, () -> (double) new Random().nextInt(1, 11)));
 
-        IterationJacobiMethodChecker iterationJacobiMethodChecker = new IterationJacobiMethodChecker(matrixGenerators2, 1E-4, 10000);
+        IterationJacobiMethodChecker iterationJacobiMethodChecker = new IterationJacobiMethodChecker(matrixGenerators2, 1E-4, 1000);
+        IterationJacobiMethodChecker iterationJacobiMethodChecker1 = new IterationJacobiMethodChecker(matrixGenerators2, 1E-4, 10000);
 
         matrixAlgorithmCheckers.add(iterationJacobiMethodChecker);
+        matrixAlgorithmCheckers.add(iterationJacobiMethodChecker1);
 
         List<MarkdownBlock> markdownBlocks = new ArrayList<>();
 
